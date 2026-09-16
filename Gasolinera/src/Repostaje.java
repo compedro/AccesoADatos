@@ -1,59 +1,81 @@
 import java.util.Date;
+public enum TipoCombustible { DIESEL, GASOLINA_95, GASOLINA_98}
 
 public class Repostaje {
 
-    private int IdRepostaje;
-    private int IdCliente;
-    private Date Fecha;
-    private double  Importe;
-    private double Combustible;
+    private int idRepostaje;
+    private Cliente cliente;
+    private Date fecha;
+    private double  importe;
+    private double litros;
+    private TipoCombustible combustible;
 
-
-    public Repostaje(int idRepostaje, int idCliente, Date fecha, double importe, double combustible) {
-        IdRepostaje = idRepostaje;
-        IdCliente = idCliente;
-        Fecha = fecha;
-        Importe = importe;
-        Combustible = combustible;
+    public Repostaje(int idRepostaje, Cliente cliente, Date fecha, double importe, double litros, TipoCombustible combustible) {
+        this.idRepostaje = idRepostaje;
+        this.cliente = cliente;
+        this.fecha = fecha;
+        this.importe = importe;
+        this.litros = litros;
+        this.combustible = combustible;
     }
 
     public int getIdRepostaje() {
-        return IdRepostaje;
+        return idRepostaje;
     }
 
     public void setIdRepostaje(int idRepostaje) {
-        IdRepostaje = idRepostaje;
+        this.idRepostaje = idRepostaje;
     }
 
-    public int getIdCliente() {
-        return IdCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        IdCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Date getFecha() {
-        return Fecha;
+        return fecha;
     }
 
     public void setFecha(Date fecha) {
-        Fecha = fecha;
+        this.fecha = fecha;
     }
 
     public double getImporte() {
-        return Importe;
+        return importe;
     }
 
     public void setImporte(double importe) {
-        Importe = importe;
+        this.importe = importe;
     }
 
-    public double getCombustible() {
-        return Combustible;
+    public double getLitros() {
+        return litros;
     }
 
-    public void setCombustible(double combustible) {
-        Combustible = combustible;
+    public void setLitros(double litros) {
+        this.litros = litros;
+    }
+
+    public TipoCombustible getCombustible() {
+        return combustible;
+    }
+
+    public void setCombustible(TipoCombustible combustible) {
+        this.combustible = combustible;
+    }
+
+    @Override
+    public String toString() {
+        return "Repostaje{" +
+                "idRepostaje=" + idRepostaje +
+                ", cliente=" + cliente +
+                ", fecha=" + fecha +
+                ", importe=" + importe +
+                ", litros=" + litros +
+                ", combustible=" + combustible +
+                '}';
     }
 }
