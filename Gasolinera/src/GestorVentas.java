@@ -1,12 +1,16 @@
+import java.util.ArrayList;
+
 public class GestorVentas {
 
-    VerificaCliente {
+ArrayList<Repostaje> listaRepostajes;
+
+    public boolean verificaCliente(Cliente cliente) {
     }
 
-    RegistraCliente {
+    public void registraCliente(Cliente cliente) {
     }
 
-    RegistraRepostaje {
+    public void registraRepostaje(Repostaje repostaje) {
     }
 
 }

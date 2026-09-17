@@ -11,8 +11,8 @@ public class GestorArchivo {
     }
 
     public String leerArchivo() {
+        StringBuilder contenido = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader((rutaArchivo)))) {
-            StringBuilder contenido = StringBuilder();
             String linea;
             while ((linea = reader.readLine()) != null) {
                 contenido.append(linea).append("\n");
@@ -20,6 +20,7 @@ public class GestorArchivo {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return contenido.toString();
     }
 
 
@@ -32,6 +33,4 @@ public class GestorArchivo {
             throw new RuntimeException(e);
         }
     }
-
-
 }
