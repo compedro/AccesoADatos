@@ -1,4 +1,7 @@
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
 enum TipoCombustible { DIESEL, GASOLINA_95, GASOLINA_98}
 
 public class Repostaje {
@@ -65,6 +68,15 @@ public class Repostaje {
 
     public void setCombustible(TipoCombustible combustible) {
         this.combustible = combustible;
+    }
+
+    public String toCsv() {
+        return getIdRepostaje() + ";" +getCliente().getIdCliente() + ";" + getFecha() + ";" + getImporte() + ";" + getLitros() + ";" + getCombustible();
+    }
+
+    public static Repostaje fromCsv(String linea, List<Cliente> clientes){
+        String lineaPartida [] = linea.split(";");
+        return new Repostaje( Integer.parseInt(lineaPartida[0]),Cliente lineaPartida[1], LocalDate.parse(lineaPartida[2]), Double.parseDouble(lineaPartida[3]),Double.parseDouble( lineaPartida[4]),TipoCombustible.valueOf(lineaPartida[5]));
     }
 
     @Override
