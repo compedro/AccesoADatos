@@ -1,19 +1,22 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-enum TipoCombustible { DIESEL, GASOLINA_95, GASOLINA_98}
+enum TipoCombustible {DIESEL, GASOLINA_95, GASOLINA_98}
 
 public class Repostaje {
 
     private int idRepostaje;
     private Cliente cliente;
-    private Date fecha;
-    private double  importe;
+    private LocalDate fecha;
+    private double importe;
     private double litros;
     private TipoCombustible combustible;
 
-    public Repostaje(int idRepostaje, Cliente cliente, Date fecha, double importe, double litros, TipoCombustible combustible) {
+    public Repostaje(int idRepostaje, Cliente cliente, LocalDate fecha, double importe, double litros, TipoCombustible combustible) {
         this.idRepostaje = idRepostaje;
         this.cliente = cliente;
         this.fecha = fecha;
@@ -38,11 +41,11 @@ public class Repostaje {
         this.cliente = cliente;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -71,12 +74,23 @@ public class Repostaje {
     }
 
     public String toCsv() {
-        return getIdRepostaje() + ";" +getCliente().getIdCliente() + ";" + getFecha() + ";" + getImporte() + ";" + getLitros() + ";" + getCombustible();
+        return getIdRepostaje() + ";" + getCliente().getIdCliente() + ";" + getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + getImporte() + ";" + getLitros() + ";" + getCombustible();
     }
 
-    public static Repostaje fromCsv(String linea, List<Cliente> clientes){
-        String lineaPartida [] = linea.split(";");
-        return new Repostaje( Integer.parseInt(lineaPartida[0]),Cliente lineaPartida[1], LocalDate.parse(lineaPartida[2]), Double.parseDouble(lineaPartida[3]),Double.parseDouble( lineaPartida[4]),TipoCombustible.valueOf(lineaPartida[5]));
+    public static Repostaje fromCsv(String linea, List<Cliente> clientes) {
+        String lineaPartida[] = linea.split(";");
+        int idClienteBuscado = Integer.parseInt((lineaPartida[1]));
+        Cliente clienteEncontrado = null;
+        for (Cliente cliente : clientes) {
+            if (idClienteBuscado == cliente.getIdCliente())
+                clienteEncontrado = cliente;
+        }
+        if (clienteEncontrado != null) {
+            return new Repostaje(Integer.parseInt(lineaPartida[0]), clienteEncontrado, LocalDate.parse(lineaPartida[2],DateTimeFormatter.ofPattern("dd/MM/yyyy")), Double.parseDouble(lineaPartida[3]), Double.parseDouble(lineaPartida[4]), TipoCombustible.valueOf(lineaPartida[5]));
+        } else {
+            return null;
+        }
+
     }
 
     @Override
@@ -89,6 +103,6 @@ public class Repostaje {
 //                ", litros=" + litros +
 //                ", combustible=" + combustible +
 //                '}';
-        return idRepostaje + ","+ cliente+ ","+ fecha+ ","+ importe+ ","+ litros+ ","+ combustible;
+        return idRepostaje + "," + cliente + "," + fecha + "," + importe + "," + litros + "," + combustible;
     }
 }

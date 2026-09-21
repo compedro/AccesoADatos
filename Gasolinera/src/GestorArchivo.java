@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -38,7 +39,7 @@ public class GestorArchivo {
 //        gestorArchivo.escribirArchivo("18/9/2026,test, gasoil,20,20");
 
         Cliente cliente = new Cliente(1,"Ivan","910000001", "BCD 1234");
-        Repostaje repostaje = new Repostaje(1, cliente,new Date(),50,40, TipoCombustible.DIESEL);
+        Repostaje repostaje = new Repostaje(1, cliente, LocalDate.now(),50,40, TipoCombustible.DIESEL);
         gestorArchivo.escribirArchivo(repostaje.toString());
         System.out.println(gestorArchivo.leerArchivo());
     }
