@@ -1,9 +1,6 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 enum TipoCombustible {DIESEL, GASOLINA_95, GASOLINA_98}
 
@@ -73,24 +70,25 @@ public class Repostaje {
         this.combustible = combustible;
     }
 
-    public String toCsv() {
-        return getIdRepostaje() + ";" + getCliente().getIdCliente() + ";" + getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + getImporte() + ";" + getLitros() + ";" + getCombustible();
-    }
 
-    public static Repostaje fromCsv(String linea, List<Cliente> clientes) {
+
+    public static Repostaje fromCsv(String linea, Map<Integer, Cliente> clientes) {
         String lineaPartida[] = linea.split(";");
         int idClienteBuscado = Integer.parseInt((lineaPartida[1]));
-        Cliente clienteEncontrado = null;
-        for (Cliente cliente : clientes) {
-            if (idClienteBuscado == cliente.getIdCliente())
-                clienteEncontrado = cliente;
-        }
-        if (clienteEncontrado != null) {
-            return new Repostaje(Integer.parseInt(lineaPartida[0]), clienteEncontrado, LocalDate.parse(lineaPartida[2],DateTimeFormatter.ofPattern("dd/MM/yyyy")), Double.parseDouble(lineaPartida[3]), Double.parseDouble(lineaPartida[4]), TipoCombustible.valueOf(lineaPartida[5]));
-        } else {
-            return null;
-        }
+        Cliente clienteEncontrado = clientes.get(idClienteBuscado);
 
+        if (clienteEncontrado != null) {
+            return new Repostaje(
+                    Integer.parseInt(lineaPartida[0]),
+                    clienteEncontrado,
+                    LocalDate.parse(lineaPartida[2],
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    Double.parseDouble(lineaPartida[3]),
+                    Double.parseDouble(lineaPartida[4]),
+                    TipoCombustible.valueOf(lineaPartida[5])
+            );
+        }
+        return null;
     }
 
     @Override

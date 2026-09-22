@@ -1,16 +1,26 @@
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GestorVentas {
 
-ArrayList<Repostaje> listaRepostajes;
+    Map<Integer, Cliente> clientes;
+    Map<Integer, Repostaje> repostajes;
 
-    public void verificaCliente(Cliente cliente) {
+
+    public void darAltaCliente(Cliente cliente) {
     }
 
-    public void registraCliente(Cliente cliente) {
+    public void listarClientes() {
     }
 
-    public void registraRepostaje(Repostaje repostaje) {
+    public void buscarClientes(String texto) {
+
     }
 
+    public void procesarPago(Cliente cliente, Repostaje repostaje) {
+    }
+
+    public void consultarPagos(String texto) {
+
+    }
 }
