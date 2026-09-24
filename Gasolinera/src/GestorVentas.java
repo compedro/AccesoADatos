@@ -49,7 +49,19 @@ public class GestorVentas {
     }
 
 
-    public void procesarPago(Cliente cliente, Repostaje repostaje) {
+    public boolean procesarPago(int idCliente, Repostaje repostaje) {
+
+        if (!clientes.containsKey(idCliente)) { // Primero compruebo si el cliente ya está en el Map de clientes.
+            System.out.println("Error: El cliente con ID " + idCliente + " no existe.");
+            return false;
+        } else {
+            Cliente c = clientes.get(idCliente);  // obtengo los datos del cliente a través de idCliente proporcionado al método
+            repostaje.setCliente(c);               // asigno el cliente al repostaje
+            repostaje.setIdRepostaje(repostajes.size()+1);      //asigno el idRepostaje sumando uno al numero de repostajes ya registrados
+            repostajes.put(repostaje.getIdRepostaje(), repostaje); // añado el repostaje al Map de respostajes
+            gestorArchivoCSV.guardarRepostaje(repostaje);       // guardo el repostaje al CSV de repostajes
+            return true;
+        }
     }
 
     public void consultarPagos(String texto) {
