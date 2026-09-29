@@ -28,7 +28,7 @@ public class Main {
                 opcion = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Por favor, introduce un número válido.");
-                opcion =-1;
+                opcion = -1;
                 scanner.nextLine();
             }
             switch (opcion) {
@@ -64,13 +64,14 @@ public class Main {
                             idCliente = scanner.nextInt();
                             idValido = true;
                         } catch (Exception e) {
-                            System.out.println("Introduce un número en el id del cliente");
+                            System.out.println("Introduce un NÚMERO en el id del cliente");
                             scanner.nextLine();
                         }
                     } while (!idValido);
+
                     System.out.println("==Introduce los datos del repostaje ==");
                     double importe;
-                    boolean importeValido= false;
+                    boolean importeValido = false;
                     do {
                         importe = 0;
                         try {
@@ -78,29 +79,49 @@ public class Main {
                             importe = scanner.nextDouble();
                             importeValido = true;
                         } catch (Exception e) {
-                            System.out.println("Introduce un número en el importe de abonado");
+                            System.out.println("Introduce un NÚMERO en el importe de abonado");
                             scanner.nextLine();
                         }
                     } while (!importeValido);
-                    System.out.println("litros de combustible: ");
-                    double litros = scanner.nextDouble();
+
+                    double litros;
+                    boolean litrosValido = false;
+                    do {
+                        litros = 0;
+                        try {
+                            System.out.println("litros de combustible: ");
+                            litros = scanner.nextDouble();
+                            litrosValido = true;
+                        } catch (Exception e) {
+                            System.out.println("Introduce un NÚMERO en los litros");
+                            scanner.nextLine();
+                        }
+                    } while (!litrosValido);
+
                     System.out.println("Tipo de combustible: ");
                     TipoCombustible tipoCombustible = null;
                     int opcionCombustible = -1;
+                    boolean combustibleValido = false;
                     do {
-                        System.out.println("1- DIESEL\n" +
-                                "2- GASOLINA 95\n" +
-                                "3- GASOLINA 98\n" +
-                                "Opcion: ");
-                        opcionCombustible = scanner.nextInt();
+                        try {
+                            System.out.println("1- DIESEL\n" +
+                                    "2- GASOLINA 95\n" +
+                                    "3- GASOLINA 98\n" +
+                                    "Opcion: ");
+                            opcionCombustible = scanner.nextInt();
+                            combustibleValido = true;
+                        } catch (Exception e) {
+                            System.out.println("Introduce un NÚMERO");
+                            scanner.nextLine();
+                        }
                         switch (opcionCombustible) {
-                            case 1 -> tipoCombustible=TipoCombustible.DIESEL;
-                            case 2 -> tipoCombustible=TipoCombustible.GASOLINA_95;
-                            case 3 -> tipoCombustible=TipoCombustible.GASOLINA_98;
+                            case 1 -> tipoCombustible = TipoCombustible.DIESEL;
+                            case 2 -> tipoCombustible = TipoCombustible.GASOLINA_95;
+                            case 3 -> tipoCombustible = TipoCombustible.GASOLINA_98;
                             default -> System.out.println("Combustible no disponible");
-                            }
+                        }
                     }
-                    while (tipoCombustible==null);
+                    while (tipoCombustible == null);
                     Repostaje repostaje = new Repostaje(1, clientes.get(idCliente), LocalDate.now(), importe, litros, tipoCombustible);
                     if (gestorVentas.procesarPago(idCliente, repostaje))
                         System.out.println("Pago procesado correctamente");
