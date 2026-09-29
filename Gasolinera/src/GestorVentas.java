@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 public class GestorVentas {
@@ -27,7 +29,12 @@ public class GestorVentas {
     public void listarClientes() {
         if (clientes.isEmpty()) System.out.println("No hay clientes registrados todavía.");
         else {
-            for (Cliente c : clientes.values()) {
+            List<Cliente> listaClientes = new ArrayList<>(clientes.values()); //convierto el mapa en una lista
+            Comparator<Cliente> comparador = Comparator     //creo el comparador con dos criterios
+                    .comparing(Cliente::getNombre, String.CASE_INSENSITIVE_ORDER)   //ordenando alfabeticamente ignorando mayusculas y minusculas
+                    .thenComparingInt(Cliente::getIdCliente);                       // establezco el desempate por id
+            listaClientes.sort(comparador); // ordena la lista
+            for (Cliente c : listaClientes) {
                 System.out.println(c);
             }
         }
@@ -39,7 +46,7 @@ public class GestorVentas {
             if ((c.getNombre().toLowerCase().contains(texto.toLowerCase())) || (c.getMatricula().toLowerCase().contains(texto.toLowerCase()))) {
                 encontrado = true;
                 System.out.println("ClienteId: " + c.getIdCliente() + "\n" + "Nombre: " + c.getNombre() + "\n" +
-                        "Telefono: " + c.getTelefono() + "\n" + "Matricula: " + c.getMatricula());
+                        "Telefono: " + c.getTelefono() + "\n" + "Matricula: " + c.getMatricula()+ "\n"+ "-----");
             }
         }
         if (!encontrado) {

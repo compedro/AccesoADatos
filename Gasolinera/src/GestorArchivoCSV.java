@@ -31,22 +31,22 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
 
 
     public String toCsv(Cliente cliente) {
-        return cliente.getIdCliente() + "," + cliente.getNombre() + "," + cliente.getTelefono() + "," + cliente.getMatricula()+ ";";
+        return cliente.getIdCliente() + "," + cliente.getNombre() + "," + cliente.getTelefono() + "," + cliente.getMatricula();
     }
 
     public String toCsv(Repostaje repostaje) {
         return repostaje.getIdRepostaje() + "," + repostaje.getCliente().getIdCliente() + "," +
                 repostaje.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "," +
-                repostaje.getImporte() + "," + repostaje.getLitros() + "," + repostaje.getCombustible()+ ";";
+                repostaje.getImporte() + "," + repostaje.getLitros() + "," + repostaje.getCombustible();
     }
 
     public static Cliente fromCsv(String linea) {
-        String lineaPartida[] = linea.split(";");
+        String lineaPartida[] = linea.split(",");
         return new Cliente(Integer.parseInt(lineaPartida[0]), lineaPartida[1], lineaPartida[2], lineaPartida[3]);
     }
 
     public static Repostaje fromCsv(String linea, Map<Integer, Cliente> clientes) {
-        String[] lineaPartida = linea.split(";");
+        String[] lineaPartida = linea.split(",");
 
         int idRepostaje = Integer.parseInt(lineaPartida[0]);
         int idCliente = Integer.parseInt(lineaPartida[1]);
