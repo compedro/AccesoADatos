@@ -34,6 +34,8 @@ public class GestorVentas {
                     .comparing(Cliente::getNombre, String.CASE_INSENSITIVE_ORDER)   //ordenando alfabeticamente ignorando mayusculas y minusculas
                     .thenComparingInt(Cliente::getIdCliente);                       // establezco el desempate por id
             listaClientes.sort(comparador); // ordena la lista
+            System.out.printf("%-5s %-20s %-15s %-10s%n", "ID", "NOMBRE", "TELÉFONO", "MATRÍCULA");
+            System.out.println("------------------------------------------------------------");
             for (Cliente c : listaClientes) {
                 System.out.println(c);
             }
@@ -71,6 +73,9 @@ public class GestorVentas {
     public void consultarPagos() {
         if (repostajes.isEmpty()) System.out.println("No hay repostajes registrados");
         else {
+            System.out.printf("%-15s %-20s %-15s %-15s %-15s %-10s%n", "idRepostaje", "Cliente",
+                    "Fecha","Importe","Litros", "Combustible");
+            System.out.println("---------------------------------------------------------------------------------------------------------------");
             for (Repostaje r : repostajes.values()) {
                 System.out.println(r);
             }
