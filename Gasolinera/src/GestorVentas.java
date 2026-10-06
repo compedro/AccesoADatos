@@ -8,11 +8,13 @@ public class GestorVentas {
     Map<Integer, Cliente> clientes;
     Map<Integer, Repostaje> repostajes;
     GestorArchivoCSV gestorArchivoCSV;
+    GestorArchivoJSON gestorArchivoJSON;
 
-    public GestorVentas(Map<Integer, Cliente> clientes, Map<Integer, Repostaje> repostajes, GestorArchivoCSV gestorArchivoCSV) {
+    public GestorVentas(Map<Integer, Cliente> clientes, Map<Integer, Repostaje> repostajes, GestorArchivoCSV gestorArchivoCSV, GestorArchivoJSON gestorArchivoJSON) {
         this.clientes = clientes;
         this.repostajes = repostajes;
         this.gestorArchivoCSV = gestorArchivoCSV;
+        this.gestorArchivoJSON = gestorArchivoJSON;
     }
 
     public void darAltaCliente(int idCliente, String nombre, String telefono, String matricula) {
@@ -21,6 +23,7 @@ public class GestorVentas {
         if (!clientes.containsKey(nuevoCliente.getIdCliente())) {
             clientes.put(nuevoCliente.getIdCliente(), nuevoCliente);
             gestorArchivoCSV.guardarCliente(nuevoCliente);
+            gestorArchivoJSON.guardarCliente(nuevoCliente);
         } else {
             System.out.println("El cliente ya existe");
         }

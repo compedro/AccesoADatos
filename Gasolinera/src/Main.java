@@ -7,10 +7,12 @@ public class Main {
     public static void main(String[] args) {
 
         GestorArchivoCSV ArchivosGasolinera = new GestorArchivoCSV();
+        GestorArchivoJSON ArchivosGasolineraJS = new GestorArchivoJSON();
         ArchivosGasolinera.prepararArchivo();
+        ArchivosGasolineraJS.prepararArchivo();
         Map<Integer, Cliente> clientes = ArchivosGasolinera.cargarClientes();
         Map<Integer, Repostaje> repostajes = ArchivosGasolinera.cargarRepostajes(clientes);
-        GestorVentas gestorVentas = new GestorVentas(clientes, repostajes, ArchivosGasolinera);
+        GestorVentas gestorVentas = new GestorVentas(clientes, repostajes, ArchivosGasolinera, ArchivosGasolineraJS);
 
         Scanner scanner = new Scanner(System.in);
         int opcion = -1;
@@ -50,6 +52,7 @@ public class Main {
                         matricula = scanner.nextLine().trim();
                     } while (matricula.isEmpty());
                     gestorVentas.darAltaCliente(1, nombreCliente, telefono, matricula); // asigno un id fijo porque luego se lo reasignaré en el darAltaCliente
+
                 }
 
                 case 2 -> {     // Listar clientes
