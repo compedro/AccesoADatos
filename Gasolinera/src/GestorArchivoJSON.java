@@ -3,6 +3,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class GestorArchivoJSON implements ItfGestorArchivo {
@@ -46,12 +47,21 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
         return escribirArchivo(RutaClientesJS, toJson(c) );
     }
 
-    @Override
-    public boolean guardarRepostaje(Repostaje r) {
-        return false;
+    public String toJson(Repostaje repostaje) {
+        return "{"+"'idRespotaje':" + repostaje.getIdRepostaje() + "," + "'idRespotaje':" + repostaje.getCliente().getIdCliente() + "," + "'Fecha': "+
+                repostaje.getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "," + "'Importe: '"+
+                repostaje.getImporte() + "," +"'Repostaje: '"+ repostaje.getLitros() + "," +"'Combustible:' "+ repostaje.getCombustible()+"}";
     }
 
+    @Override
+    public boolean guardarRepostaje(Repostaje r) {
+        return escribirArchivo(RutaRepostajesJS, toJson(r) );
+    }
 
+    public static Cliente fromJson(String linea) {
+        String lineaPartida[] = linea.split(",");   // Hace falta establece la forma de eliminar el texto del limite entre etiquetes y datos
+        return new Cliente(Integer.parseInt(lineaPartida[0]), lineaPartida[1], lineaPartida[2], lineaPartida[3]);
+    }
 
     @Override
     public Map<Integer, Cliente> cargarClientes() {
