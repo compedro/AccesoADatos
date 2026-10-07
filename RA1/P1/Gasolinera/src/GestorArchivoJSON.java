@@ -19,11 +19,11 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
             }
             if (Files.notExists(RutaRepostajesJS)) {
                 Files.createFile(RutaRepostajesJS);
+                Files.writeString(RutaRepostajesJS, "{ 'pagos' : [ ");
             }
         } catch (IOException e) {
             System.out.println("Error al inicializar los archivos; " + e.getMessage());
         }
-
     }
 
     @Override

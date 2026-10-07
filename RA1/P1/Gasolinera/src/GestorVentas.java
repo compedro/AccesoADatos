@@ -69,6 +69,7 @@ public class GestorVentas {
             repostaje.setIdRepostaje(repostajes.size() + 1);      //asigno el idRepostaje sumando uno al numero de repostajes ya registrados
             repostajes.put(repostaje.getIdRepostaje(), repostaje); // añado el repostaje al Map de respostajes
             gestorArchivoCSV.guardarRepostaje(repostaje);       // guardo el repostaje al CSV de repostajes
+            gestorArchivoJSON.guardarRepostaje(repostaje);      //guardo el repostaje en el JSON repostajes
             return repostaje;
         }
     }
