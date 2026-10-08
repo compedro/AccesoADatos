@@ -8,7 +8,10 @@ public class Main {
 
         GestorArchivoCSV ArchivosGasolinera = new GestorArchivoCSV();
         GestorArchivoJSON ArchivosGasolineraJS = new GestorArchivoJSON();
-        ArchivosGasolinera.prepararArchivo();
+/* Propuesta de Victor
+       //        Almacenamiento almacenamiento = new AlmacenamientoEnCSV();
+       //        Almacenamiento almacenamiento = new AlmacenamientoEnJSON();
+ */
         ArchivosGasolineraJS.prepararArchivo();
         Map<Integer, Cliente> clientes = ArchivosGasolinera.cargarClientes();
         Map<Integer, Repostaje> repostajes = ArchivosGasolinera.cargarRepostajes(clientes);
