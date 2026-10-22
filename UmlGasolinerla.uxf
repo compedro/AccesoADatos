@@ -1,0 +1,57 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>50</x><y>550</y><w>280</w><h>130</h></coordinates><panel_attributes>GestorArchivosCSV
+--
+- rutaClientes: Path
+- rutaRepostajes: Path
+--
++ GestorArchivoCSV()
++ toCsv(Cliente)
++ toCsv(Repostaje)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>530</y><w>410</w><h>180</h></coordinates><panel_attributes>GestorVentas
+--
+- listaClientes: List&lt;Cliente&gt;
+- listaRepostajes: List&lt;Repostaje&gt;
+- gestorArchivos: GestorArchivos
+--
++ GestorVentas()
++ verificarCliente(idCliente: int): boolean
++ registrarCliente(nuevoCliente: Cliente): void
++ registrarRepostaje(nuevoRepostaje: Repostaje): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>90</x><y>800</y><w>260</w><h>150</h></coordinates><panel_attributes>Cliente
+--
+- idCliente: int
+- nombre: String
+- telefono: String
+- matricula: String
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>510</x><y>790</y><w>270</w><h>170</h></coordinates><panel_attributes>Repostaje
+--
+- idRepostaje: int
+- cliente: Cliente
+- fecha: String
+- importe: double
+- litros: double
+- combustible: TipoCombustible
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>860</x><y>800</y><w>210</w><h>130</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+TipoCombustible
+--
+DIESEL
+GASOLINA_95
+GASOLINA_98</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>600</y><w>130</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+-gestorArchivos</panel_attributes><additional_attributes>10;20;110;20</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>700</y><w>300</w><h>120</h></coordinates><panel_attributes>lt=&lt;-
+m1=*
+-listaClientes</panel_attributes><additional_attributes>10;100;10;50;280;50;280;10</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>700</y><w>120</w><h>110</h></coordinates><panel_attributes>lt=&lt;-
+m1=*
+-listaRepostajes</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>340</x><y>860</y><w>190</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*
+realiza &gt;</panel_attributes><additional_attributes>10;20;170;20</additional_attributes></element><element><id>Relation</id><coordinates><x>770</x><y>870</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>30</x><y>340</y><w>280</w><h>130</h></coordinates><panel_attributes>ItfGestorArchivos &lt;&lt;interfaz&gt;&gt;
+--
+
+--
++ prepararArchivo(): void
++ guardarCliente(Cliente c): boolean
++ guardarRepostaje(Repostaje r): boolean
+cargarClientes()
+cargarRepostajes()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>460</y><w>40</w><h>110</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>20;10;10;90</additional_attributes></element></diagram>
