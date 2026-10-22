@@ -24,6 +24,7 @@ public class GestorVentas {
             clientes.put(nuevoCliente.getIdCliente(), nuevoCliente);
             gestorArchivoCSV.guardarCliente(nuevoCliente);
             gestorArchivoJSON.guardarCliente(nuevoCliente);
+//            gestorArchivoJSON.guardarClientesEnArchivo();   Comentada porque no se quiere guardar en el archivo JSON hasta el fina
         } else {
             System.out.println("El cliente ya existe");
         }

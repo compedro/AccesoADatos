@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -12,6 +13,7 @@ import java.util.Map;
 public class GestorArchivoJSON implements ItfGestorArchivo {
     private static final Path RutaClientesJS = Path.of("clientes.js");
     private static final Path RutaRepostajesJS = Path.of("repostajes.js");
+    private Map<Integer, Cliente> clientesEnMemoria = new HashMap<>();
 
     @Override
     public void prepararArchivo() {
@@ -19,6 +21,8 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
             if (Files.notExists(RutaClientesJS)) {
                 Files.createFile(RutaClientesJS);
                 Files.writeString(RutaClientesJS, "{ 'clientes' : [ ");
+            } else {
+                cargarClientes();
             }
             if (Files.notExists(RutaRepostajesJS)) {
                 Files.createFile(RutaRepostajesJS);
@@ -48,8 +52,30 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
 
     @Override
     public boolean guardarCliente(Cliente c) {
-        return escribirArchivo(RutaClientesJS, toJson(c) );
+        clientesEnMemoria.put(c.getIdCliente(), c);
+        return true;
     }
+
+    public boolean guardarClientesEnArchivo() {
+        try {
+            StringBuilder json = new StringBuilder("{ 'clientes' : [ ");
+            boolean primero = true;
+            for (Cliente cliente : clientesEnMemoria.values()) {
+                if (!primero) {
+                    json.append(",");
+                }
+                json.append(toJson(cliente));
+                primero = false;
+            }
+            json.append(" ] }");
+            Files.writeString(RutaClientesJS, json.toString(), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al guardar clientes en archivo: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     public String toJson(Repostaje repostaje) {
         return "{\"id\": " + repostaje.getIdRepostaje() + ",\"id_cliente\": " + repostaje.getCliente().getIdCliente()
@@ -99,14 +125,14 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
 
     @Override
     public Map<Integer, Cliente> cargarClientes() {
-        Map<Integer, Cliente> clientes = new HashMap<>();
+        clientesEnMemoria.clear();
         try (BufferedReader br = Files.newBufferedReader(RutaClientesJS, StandardCharsets.UTF_8)) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 if (linea.contains("\"id\":") && linea.contains("\"nombre\":")) {
                     try {
                         Cliente cliente = fromJson(linea);
-                        clientes.put(cliente.getIdCliente(), cliente);
+                        clientesEnMemoria.put(cliente.getIdCliente(), cliente);
                     } catch (Exception e) {
                         System.out.println("Error al parsear línea: " + linea);
                     }
@@ -115,7 +141,7 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
         } catch (IOException e) {
             System.out.println("Error al cargar el archivo de clientes JSON: " + e.getMessage());
         }
-        return clientes;
+        return new HashMap<>(clientesEnMemoria);
     }
 
     @Override

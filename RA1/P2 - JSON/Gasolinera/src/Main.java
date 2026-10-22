@@ -154,7 +154,6 @@ public class Main {
                     }else {
                         System.out.println("El pago no se ha procesado correctamente");
                     }
-                    ;
                 }
                 case 5 -> { // Consultar pagos
                     gestorVentas.consultarPagos();
@@ -166,7 +165,10 @@ public class Main {
                     migrador.migrarTodo();
                     System.out.println("Migración completada");
                 }
-                case 0 -> System.out.println("¡Gracias por usar la aplicación!");
+                case 0 -> {
+                    System.out.println("¡Gracias por usar la aplicación!");
+                    ArchivosGasolineraJS.guardarClientesEnArchivo();
+                }
                 default -> System.out.println("Opción no válida. Intente de nuevo.");
             }
         }
