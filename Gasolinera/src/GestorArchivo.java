@@ -16,7 +16,7 @@ public class GestorArchivo {
 
     public String leerArchivo() {
 
-        try { return Files.readString(rutaArchivo);
+        try { return Files.readString(rutaArchivo, StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
