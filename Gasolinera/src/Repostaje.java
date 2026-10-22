@@ -1,5 +1,5 @@
 import java.util.Date;
-public enum TipoCombustible { DIESEL, GASOLINA_95, GASOLINA_98}
+enum TipoCombustible { DIESEL, GASOLINA_95, GASOLINA_98}
 
 public class Repostaje {
 

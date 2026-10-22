@@ -4,7 +4,7 @@ public class GestorVentas {
 
 ArrayList<Repostaje> listaRepostajes;
 
-    public boolean verificaCliente(Cliente cliente) {
+    public void verificaCliente(Cliente cliente) {
     }
 
     public void registraCliente(Cliente cliente) {
