@@ -15,13 +15,13 @@ public class GestorVentas {
 
     public void darAltaCliente(int idCliente, String nombre, String telefono, String matricula) {
         Cliente nuevoCliente = new Cliente(idCliente, nombre, telefono, matricula);
+        nuevoCliente.setIdCliente(clientes.size()+1); // reasigno el idCliente sumando uno al numero de clientes almacenados
         if (!clientes.containsKey(nuevoCliente.getIdCliente())) {
             clientes.put(nuevoCliente.getIdCliente(), nuevoCliente);
             gestorArchivoCSV.guardarCliente(nuevoCliente);
         } else {
             System.out.println("El cliente ya existe");
         }
-
     }
 
     public void listarClientes() {
@@ -44,11 +44,8 @@ public class GestorVentas {
         }
         if (!encontrado) {
             System.out.println("No hay clientes que contengan el texto proporcionado");
-
         }
     }
-
-
     public boolean procesarPago(int idCliente, Repostaje repostaje) {
 
         if (!clientes.containsKey(idCliente)) { // Primero compruebo si el cliente ya está en el Map de clientes.

@@ -26,8 +26,8 @@ public class Main {
             opcion = scanner.nextInt();
             switch (opcion) {
                 case 1 -> { // Dar de alta un cliente
-                    System.out.println("Introduce el idCliente: ");
-                    int idCliente = scanner.nextInt();
+//                    System.out.println("Introduce el idCliente: ");
+//                    int idCliente = scanner.nextInt();
                     scanner.nextLine();
                     System.out.println("Introduce el Nombre: ");
                     String nombreCliente = scanner.nextLine();
@@ -35,7 +35,7 @@ public class Main {
                     String telefono = scanner.nextLine();
                     System.out.println("Introduce la matricula");
                     String matricula = scanner.nextLine();
-                    gestorVentas.darAltaCliente(idCliente, nombreCliente, telefono, matricula);
+                    gestorVentas.darAltaCliente(1, nombreCliente, telefono, matricula); // asigno un id fijo porque luego se lo reasignaré en el darAltaCliente
                 }
 
                 case 2 -> {     // Listar clientes
