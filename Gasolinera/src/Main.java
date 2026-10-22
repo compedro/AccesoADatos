@@ -33,8 +33,6 @@ public class Main {
             }
             switch (opcion) {
                 case 1 -> { // Dar de alta un cliente
-//                    System.out.println("Introduce el idCliente: ");
-//                    int idCliente = scanner.nextInt();
                     scanner.nextLine();
                     String nombreCliente;
                     do {

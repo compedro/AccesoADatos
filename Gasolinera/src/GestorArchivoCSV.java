@@ -32,9 +32,24 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
         }
     }
 
+    public boolean escribirArchivo(Path ruta, String datos) {
+
+        try {
+            Files.writeString(ruta, datos + "\n", StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+        } catch (IOException e) {
+            System.out.println("RuntimeException(e)" + e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
     public String toCsv(Cliente cliente) {
         return cliente.getIdCliente() + "," + cliente.getNombre() + "," + cliente.getTelefono() + "," + cliente.getMatricula();
+    }
+    @Override
+    public boolean guardarCliente(Cliente c) {
+        return escribirArchivo(RutaClientes, toCsv(c));
     }
 
     public String toCsv(Repostaje repostaje) {
@@ -43,9 +58,34 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
                 repostaje.getImporte() + "," + repostaje.getLitros() + "," + repostaje.getCombustible();
     }
 
+    @Override
+    public boolean guardarRepostaje(Repostaje r) {
+        return escribirArchivo(RutaRepostajes, toCsv(r));
+    }
+
     public static Cliente fromCsv(String linea) {
         String lineaPartida[] = linea.split(",");
         return new Cliente(Integer.parseInt(lineaPartida[0]), lineaPartida[1], lineaPartida[2], lineaPartida[3]);
+    }
+
+    @Override
+    public Map<Integer, Cliente> cargarClientes() {
+
+        Map<Integer, Cliente> clientes = new HashMap<>();
+        try {
+            List<String> lineas = Files.readAllLines(RutaClientes, StandardCharsets.UTF_8);
+
+            for (int i = 1; i < lineas.size(); i++) {   // salta la primera linea del encabezamiento del archivo.
+                String linea = lineas.get(i);
+                if (!linea.isBlank()) {
+                    Cliente cliente = fromCsv(linea);
+                    clientes.put(cliente.getIdCliente(), cliente); // put asigna el Idcliente a índice (Integer) del Map
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al cargar el archivo de clientes");
+        }
+        return clientes;
     }
 
     public static Repostaje fromCsv(String linea, Map<Integer, Cliente> clientes) {
@@ -71,59 +111,6 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
         return null; // Si el cliente no existe en el mapa
     }
 
-    public String leerArchivo(Path ruta) {
-
-        try {
-            return Files.readString(ruta, StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public boolean escribirArchivo(Path ruta, String datos) {
-
-        try {
-            Files.writeString(ruta, datos + "\n", StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-
-        } catch (IOException e) {
-            System.out.println("RuntimeException(e)" + e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-
-    @Override
-    public boolean guardarCliente(Cliente c) {
-        return escribirArchivo(RutaClientes, toCsv(c));
-    }
-
-    @Override
-    public boolean guardarRepostaje(Repostaje r) {
-        return escribirArchivo(RutaRepostajes, toCsv(r));
-    }
-
-    @Override
-    public Map<Integer, Cliente> cargarClientes() {
-
-        Map<Integer, Cliente> clientes = new HashMap<>();
-        try {
-            List<String> lineas = Files.readAllLines(RutaClientes, StandardCharsets.UTF_8);
-
-            for (int i = 1; i < lineas.size(); i++) {   // salta la primera linea del encabezamiento del archivo.
-                String linea = lineas.get(i);
-                    if (!linea.isBlank()) {
-                        Cliente cliente = fromCsv(linea);
-                        clientes.put(cliente.getIdCliente(), cliente); // put asigna el Idcliente a índice (Integer) del Map
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error al cargar el archivo de clientes");
-        }
-        return clientes;
-    }
-
     @Override
     public Map<Integer, Repostaje> cargarRepostajes(Map<Integer, Cliente> clientes) {
 
@@ -132,7 +119,7 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
 
             List<String> lineas = Files.readAllLines(RutaRepostajes, StandardCharsets.UTF_8);
             for (int i = 1; i < lineas.size(); i++) {       // salta la primera linea del encabezamiento del archivo.
-            String linea = lineas.get(i);
+                String linea = lineas.get(i);
                 if (!linea.isBlank()) {
                     Repostaje repostaje = fromCsv(linea, clientes); //conversion de linea a objeto
                     if (repostaje != null)
@@ -142,4 +129,6 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
         } catch (IOException e) {
             System.out.println("Error al cargar el archivo repostajes");
         }
-        retur
+        return repostajes;
+    }
+}
