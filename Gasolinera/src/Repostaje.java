@@ -69,13 +69,14 @@ public class Repostaje {
 
     @Override
     public String toString() {
-        return "Repostaje{" +
-                "idRepostaje=" + idRepostaje +
-                ", cliente=" + cliente +
-                ", fecha=" + fecha +
-                ", importe=" + importe +
-                ", litros=" + litros +
-                ", combustible=" + combustible +
-                '}';
+//        return "Repostaje{" +
+//                "idRepostaje=" + idRepostaje +
+//                ", cliente=" + cliente +
+//                ", fecha=" + fecha +
+//                ", importe=" + importe +
+//                ", litros=" + litros +
+//                ", combustible=" + combustible +
+//                '}';
+        return idRepostaje + ","+ cliente+ ","+ fecha+ ","+ importe+ ","+ litros+ ","+ combustible;
     }
 }

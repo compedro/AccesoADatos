@@ -1,0 +1,43 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>40</x><y>50</y><w>280</w><h>130</h></coordinates><panel_attributes>GestorArchivos
+--
+- rutaArchivo: String
+--
++ escribirArchivo(datos: String): void
++ leerArchivo(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>420</x><y>30</y><w>410</w><h>180</h></coordinates><panel_attributes>GestorVentas
+--
+- listaClientes: List&lt;Cliente&gt;
+- listaRepostajes: List&lt;Repostaje&gt;
+- gestorArchivos: GestorArchivos
+--
++ GestorVentas()
++ verificarCliente(idCliente: int): boolean
++ registrarCliente(nuevoCliente: Cliente): void
++ registrarRepostaje(nuevoRepostaje: Repostaje): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>80</x><y>300</y><w>260</w><h>150</h></coordinates><panel_attributes>Cliente
+--
+- idCliente: int
+- nombre: String
+- telefono: String
+- matricula: String
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>290</y><w>270</w><h>170</h></coordinates><panel_attributes>Repostaje
+--
+- idRepostaje: int
+- cliente: Cliente
+- fecha: String
+- importe: double
+- litros: double
+- combustible: TipoCombustible
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>850</x><y>300</y><w>210</w><h>130</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+TipoCombustible
+--
+DIESEL
+GASOLINA_95
+GASOLINA_98</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>100</y><w>130</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+-gestorArchivos</panel_attributes><additional_attributes>10;20;110;20</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>200</y><w>300</w><h>120</h></coordinates><panel_attributes>lt=&lt;-
+m1=*
+-listaClientes</panel_attributes><additional_attributes>10;100;10;50;280;50;280;10</additional_attributes></element><element><id>Relation</id><coordinates><x>630</x><y>200</y><w>120</w><h>110</h></coordinates><panel_attributes>lt=&lt;-
+m1=*
+-listaRepostajes</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>360</y><w>190</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*
+realiza &gt;</panel_attributes><additional_attributes>10;20;170;20</additional_attributes></element><element><id>Relation</id><coordinates><x>760</x><y>370</y><w>110</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element></diagram>
