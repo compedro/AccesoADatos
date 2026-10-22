@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -23,7 +24,13 @@ public class Main {
                     "5. Consultar pagos\n" +
                     "0. Salir\n" +
                     "Opción:");
-            opcion = scanner.nextInt();
+            try {
+                opcion = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, introduce un número válido.");
+                opcion =-1;
+                scanner.nextLine();
+            }
             switch (opcion) {
                 case 1 -> { // Dar de alta un cliente
 //                    System.out.println("Introduce el idCliente: ");
@@ -49,10 +56,32 @@ public class Main {
                 }
                 case 4 -> {// Procesar un pago de repostaje
                     System.out.println("Introduce el id del cliente: ");
-                    int idCliente = scanner.nextInt();
+                    int idCliente;
+                    boolean idValido = false;
+                    do {
+                        idCliente = 0;
+                        try {
+                            idCliente = scanner.nextInt();
+                            idValido = true;
+                        } catch (Exception e) {
+                            System.out.println("Introduce un número en el id del cliente");
+                            scanner.nextLine();
+                        }
+                    } while (!idValido);
                     System.out.println("==Introduce los datos del repostaje ==");
-                    System.out.println("Importe abonado: ");
-                    double importe = scanner.nextDouble();
+                    double importe;
+                    boolean importeValido= false;
+                    do {
+                        importe = 0;
+                        try {
+                            System.out.println("Importe abonado: ");
+                            importe = scanner.nextDouble();
+                            importeValido = true;
+                        } catch (Exception e) {
+                            System.out.println("Introduce un número en el importe de abonado");
+                            scanner.nextLine();
+                        }
+                    } while (!importeValido);
                     System.out.println("litros de combustible: ");
                     double litros = scanner.nextDouble();
                     System.out.println("Tipo de combustible: ");
