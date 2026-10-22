@@ -69,17 +69,8 @@ public class Repostaje {
     }
 
 
-
-
-
     @Override
     public String toString() {
-        return "---Repostaje ---"+ "\n"+
-        "Numero repostaje: "+idRepostaje +"\n"+
-                "Cliente: " + cliente.getNombre() +" | " + "idCliente: "+ cliente.getIdCliente()+" | " + "Matricula: " + cliente.getMatricula() +"\n"+
-                "Fecha: " + fecha +"\n"+
-                "Importe: " + importe +"\n"+
-                "Litros: " + litros +"\n"+
-                "Combustible: " + combustible;
+        return String.format("%-15s %-20s %-15s %-15s %-15s %-10s%n",idRepostaje, cliente.getNombre(), fecha, importe, litros, combustible);
     }
 }

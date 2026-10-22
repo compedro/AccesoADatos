@@ -49,11 +49,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-                "idCliente=" + idCliente +
-                ", nombre='" + nombre + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", matricula='" + matricula + '\'' +
-                '}';
+        return String.format("%-5s %-20s %-15s %-10s%n", idCliente,nombre,telefono,matricula );
     }
 }
