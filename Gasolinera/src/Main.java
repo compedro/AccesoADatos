@@ -143,9 +143,10 @@ public class Main {
                     }
                     while (tipoCombustible == null);
                     Repostaje repostaje = new Repostaje(1, clientes.get(idCliente), LocalDate.now(), importe, litros, tipoCombustible);
-                    if (gestorVentas.procesarPago(idCliente, repostaje))
+                    if (gestorVentas.procesarPago(idCliente, repostaje)!=null) {
                         System.out.println("Pago procesado correctamente");
-                    else {
+                        System.out.println("Pago " + repostaje.getIdRepostaje() + " registrado para " + clientes.get(idCliente).getNombre() + " " +repostaje.getImporte() + " € ");
+                    }else {
                         System.out.println("El pago no se ha procesado correctamente");
                     }
                     ;
