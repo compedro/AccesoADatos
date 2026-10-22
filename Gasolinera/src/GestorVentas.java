@@ -57,14 +57,19 @@ public class GestorVentas {
         } else {
             Cliente c = clientes.get(idCliente);  // obtengo los datos del cliente a través de idCliente proporcionado al método
             repostaje.setCliente(c);               // asigno el cliente al repostaje
-            repostaje.setIdRepostaje(repostajes.size()+1);      //asigno el idRepostaje sumando uno al numero de repostajes ya registrados
+            repostaje.setIdRepostaje(repostajes.size() + 1);      //asigno el idRepostaje sumando uno al numero de repostajes ya registrados
             repostajes.put(repostaje.getIdRepostaje(), repostaje); // añado el repostaje al Map de respostajes
             gestorArchivoCSV.guardarRepostaje(repostaje);       // guardo el repostaje al CSV de repostajes
             return true;
         }
     }
 
-    public void consultarPagos(String texto) {
-
+    public void consultarPagos() {
+        if (repostajes.isEmpty()) System.out.println("No hay repostajes registrados");
+        else {
+            for (Repostaje r : repostajes.values()) {
+                System.out.println(r);
+            }
+        }
     }
 }

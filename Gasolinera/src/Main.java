@@ -80,8 +80,9 @@ public class Main {
                     }
                     ;
                 }
-                case 5 -> {
-                }// Consultar pagos}
+                case 5 -> { // Consultar pagos
+                    gestorVentas.consultarPagos();
+                }
                 case 0 -> System.out.println("¡Gracias por usar la aplicación!");
                 default -> System.out.println("Opción no válida. Intente de nuevo.");
             }
