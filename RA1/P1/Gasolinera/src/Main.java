@@ -24,6 +24,7 @@ public class Main {
                     "3. Buscar clientes\n" +
                     "4. Procesar un pago de repostaje\n" +
                     "5. Consultar pagos\n" +
+                    "6. Migrar CSV a Json\n" +
                     "0. Salir\n" +
                     "Opción:");
             try {
@@ -154,6 +155,13 @@ public class Main {
                 }
                 case 5 -> { // Consultar pagos
                     gestorVentas.consultarPagos();
+                }
+                case 6 -> { // Migrar CSV a Json
+                    System.out.println("Migrando Csv a Json...");
+                    MigraCSVToJson migrador = new MigraCSVToJson();
+                    migrador.migrarCSVToJson();
+                    migrador.migrarTodo();
+                    System.out.println("Migración completada");
                 }
                 case 0 -> System.out.println("¡Gracias por usar la aplicación!");
                 default -> System.out.println("Opción no válida. Intente de nuevo.");

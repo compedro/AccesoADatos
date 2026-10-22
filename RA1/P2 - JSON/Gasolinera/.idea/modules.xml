@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AccesoADatos.iml" filepath="$PROJECT_DIR$/AccesoADatos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Gasolinera.iml" filepath="$PROJECT_DIR$/Gasolinera.iml" />
     </modules>
   </component>
 </project>
