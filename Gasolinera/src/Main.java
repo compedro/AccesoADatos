@@ -36,12 +36,21 @@ public class Main {
 //                    System.out.println("Introduce el idCliente: ");
 //                    int idCliente = scanner.nextInt();
                     scanner.nextLine();
-                    System.out.println("Introduce el Nombre: ");
-                    String nombreCliente = scanner.nextLine();
-                    System.out.println("Introduce el telefono");
-                    String telefono = scanner.nextLine();
-                    System.out.println("Introduce la matricula");
-                    String matricula = scanner.nextLine();
+                    String nombreCliente;
+                    do {
+                        System.out.println("Introduce el Nombre: ");
+                        nombreCliente = scanner.nextLine().trim();
+                    } while (nombreCliente.isEmpty());
+                    String telefono;
+                    do {
+                        System.out.println("Introduce el telefono");
+                        telefono = scanner.nextLine().trim();
+                    } while (telefono.isEmpty());
+                    String matricula;
+                    do {
+                        System.out.println("Introduce la matricula");
+                        matricula = scanner.nextLine().trim();
+                    } while (matricula.isEmpty());
                     gestorVentas.darAltaCliente(1, nombreCliente, telefono, matricula); // asigno un id fijo porque luego se lo reasignaré en el darAltaCliente
                 }
 
@@ -49,9 +58,12 @@ public class Main {
                     gestorVentas.listarClientes();
                 }
                 case 3 -> { // Buscar clientes
-                    System.out.println("Introduce el nombre o la matricula a buscar: ");
-                    scanner.nextLine();
-                    String texto = scanner.nextLine();
+                    String texto;
+                    do {
+                        System.out.println("Introduce el nombre o la matricula a buscar: ");
+                        scanner.nextLine();
+                        texto = scanner.nextLine().trim();
+                    } while (texto.isEmpty());
                     gestorVentas.buscarClientes(texto);
                 }
                 case 4 -> {// Procesar un pago de repostaje
@@ -77,7 +89,11 @@ public class Main {
                         try {
                             System.out.println("Importe abonado: ");
                             importe = scanner.nextDouble();
-                            importeValido = true;
+                            importe= Math.round(importe * 100) /100.0;
+                            if (importe > 0) importeValido = true;
+                            else {
+                                System.out.println("El importe debe ser POSITIVO");
+                            }
                         } catch (Exception e) {
                             System.out.println("Introduce un NÚMERO en el importe de abonado");
                             scanner.nextLine();
@@ -91,7 +107,11 @@ public class Main {
                         try {
                             System.out.println("litros de combustible: ");
                             litros = scanner.nextDouble();
-                            litrosValido = true;
+                            litros = Math.round(litros*100)/100.0;
+                            if(litros>0)litrosValido = true;
+                            else {
+                                System.out.println("Los litros deben ser un numero POSITIVO");
+                            }
                         } catch (Exception e) {
                             System.out.println("Introduce un NÚMERO en los litros");
                             scanner.nextLine();
