@@ -1,5 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
 public class Cliente {
     private int idCliente;
     private String nombre;
@@ -45,13 +43,9 @@ public class Cliente {
         this.matricula = matricula.trim().toUpperCase();
     }
 
-    public String toCsv(){
-        return getIdCliente()+";"+getNombre()+";"+getTelefono()+";"+getMatricula(); }
 
-    public static Cliente fromCsv(String linea){
-        String lineaPartida []   = linea.split(";");
-        return new Cliente(Integer.parseInt(lineaPartida[0]),lineaPartida[1],lineaPartida[2], lineaPartida[3]);
-        }
+
+
 
     @Override
     public String toString() {
