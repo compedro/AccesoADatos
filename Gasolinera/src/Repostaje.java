@@ -72,35 +72,16 @@ public class Repostaje {
 
 
 
-    public static Repostaje fromCsv(String linea, Map<Integer, Cliente> clientes) {
-        String lineaPartida[] = linea.split(";");
-        int idClienteBuscado = Integer.parseInt((lineaPartida[1]));
-        Cliente clienteEncontrado = clientes.get(idClienteBuscado);
 
-        if (clienteEncontrado != null) {
-            return new Repostaje(
-                    Integer.parseInt(lineaPartida[0]),
-                    clienteEncontrado,
-                    LocalDate.parse(lineaPartida[2],
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    Double.parseDouble(lineaPartida[3]),
-                    Double.parseDouble(lineaPartida[4]),
-                    TipoCombustible.valueOf(lineaPartida[5])
-            );
-        }
-        return null;
-    }
 
     @Override
     public String toString() {
-//        return "Repostaje{" +
-//                "idRepostaje=" + idRepostaje +
-//                ", cliente=" + cliente +
-//                ", fecha=" + fecha +
-//                ", importe=" + importe +
-//                ", litros=" + litros +
-//                ", combustible=" + combustible +
-//                '}';
-        return idRepostaje + "," + cliente + "," + fecha + "," + importe + "," + litros + "," + combustible;
+        return "---Repostaje ---"+ "\n"+
+        "Numero repostaje: "+idRepostaje +"\n"+
+                "Cliente: " + cliente.getNombre() +" | " + "idCliente: "+ cliente.getIdCliente()+" | " + "Matricula: " + cliente.getMatricula() +"\n"+
+                "Fecha: " + fecha +"\n"+
+                "Importe: " + importe +"\n"+
+                "Litros: " + litros +"\n"+
+                "Combustible: " + combustible;
     }
 }
