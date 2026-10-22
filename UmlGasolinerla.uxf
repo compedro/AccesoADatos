@@ -1,18 +1,13 @@
-<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLClass</id><coordinates><x>0</x><y>344</y><w>416</w><h>192</h></coordinates><panel_attributes>GestorArchivosCSV
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLClass</id><coordinates><x>0</x><y>344</y><w>416</w><h>160</h></coordinates><panel_attributes>GestorArchivosCSV
 --
 - rutaClientes: Path
 - rutaRepostajes: Path
 --
-+ prepararArchivo(): void
-+ escribirArchivo(ruta: Path, datos: String): boolean
 + toCsv(cliente: Cliente) : String
-+ guardarCliente(c: Cliente): boolean
 + toCsv(repostaje: Repostaje) : String
-+ guardarRepostaje(r: Repostaje): boolean
 + fromCsv (linea: String): Cliente
-+ cargarClientes(): Map&lt;Integer, Cliente&gt;
 + fromCsv(linea: String, clientes: Map&lt;Integer, Cliente&gt;): Repostaje
-+ cargarRepostajes(clientes: Map&lt;Integer, Cliente&gt;): Map&lt;Integer, Repostaje&gt;
+
 
 
 
