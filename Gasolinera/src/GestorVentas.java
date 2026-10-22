@@ -25,11 +25,29 @@ public class GestorVentas {
     }
 
     public void listarClientes() {
+        if (clientes.isEmpty()) System.out.println("No hay clientes registrados todavía.");
+        else {
+            for (Cliente c : clientes.values()) {
+                System.out.println(c);
+            }
+        }
     }
 
     public void buscarClientes(String texto) {
+        boolean encontrado = false;
+        for (Cliente c : clientes.values()) {
+            if ((c.getNombre().toLowerCase().contains(texto.toLowerCase())) || (c.getMatricula().toLowerCase().contains(texto.toLowerCase()))) {
+                encontrado = true;
+                System.out.println("ClienteId: " + c.getIdCliente() + "\n" + "Nombre: " + c.getNombre() + "\n" +
+                        "Telefono: " + c.getTelefono() + "\n" + "Matricula: " + c.getMatricula());
+            }
+        }
+        if (!encontrado) {
+            System.out.println("No hay clientes que contengan el texto proporcionado");
 
+        }
     }
+
 
     public void procesarPago(Cliente cliente, Repostaje repostaje) {
     }
