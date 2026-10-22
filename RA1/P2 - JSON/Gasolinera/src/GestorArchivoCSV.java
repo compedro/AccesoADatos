@@ -1,4 +1,5 @@
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -13,8 +14,20 @@ import java.util.Map;
 
 public class GestorArchivoCSV implements ItfGestorArchivo {
 
-    private static final Path RutaClientes = Path.of("clientes.csv");
-    private static final Path RutaRepostajes = Path.of("repostajes.csv");
+    private static Path RutaClientes = Path.of("clientes.csv");
+    private static Path RutaRepostajes = Path.of("repostajes.csv");
+    private static Path directorio;
+
+//    public void AlmacenamientoEnCSV() {    //  Victor lo ha hecho de esta otra forma
+//        directorio = Path.of(".");
+//        try {
+//            Files.createDirectory(directorio);
+//            RutaClientes = directorio.resolve("clientes.csv"); //crea la ruta datos/clientes.csv
+//            RutaRepostajes = directorio.resolve("repostajes.csv"); //crea la ruta datos/repostajes.csv
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     @Override
     public void prepararArchivo() {
@@ -33,10 +46,8 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
     }
 
     public boolean escribirArchivo(Path ruta, String datos) {
-
         try {
             Files.writeString(ruta, datos + "\n", StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-
         } catch (IOException e) {
             System.out.println("RuntimeException(e)" + e.getMessage());
             return false;
@@ -47,6 +58,7 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
     public String toCsv(Cliente cliente) {
         return cliente.getIdCliente() + "," + cliente.getNombre() + "," + cliente.getTelefono() + "," + cliente.getMatricula();
     }
+
     @Override
     public boolean guardarCliente(Cliente c) {
         return escribirArchivo(RutaClientes, toCsv(c));
@@ -69,17 +81,34 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
     }
 
     @Override
+/*  Cambio la forma de leer antigua introduciendo BufferedReader en su lugar
+//    public Map<Integer, Cliente> cargarClientes() {
+//        Map<Integer, Cliente> clientes = new HashMap<>();
+//        try {
+//            List<String> lineas = Files.readAllLines(RutaClientes, StandardCharsets.UTF_8);
+//
+//            for (int i = 1; i < lineas.size(); i++) {   // salta la primera linea del encabezamiento del archivo.
+//                String linea = lineas.get(i);
+//                if (!linea.isBlank()) {
+//                    Cliente cliente = fromCsv(linea);
+//                    clientes.put(cliente.getIdCliente(), cliente); // put asigna el Idcliente a índice (Integer) del Map
+//                }
+//            }
+//        } catch (IOException e) {
+//            System.out.println("Error al cargar el archivo de clientes");
+//        }
+//        return clientes;
+//    }
+*/
     public Map<Integer, Cliente> cargarClientes() {
-
         Map<Integer, Cliente> clientes = new HashMap<>();
-        try {
-            List<String> lineas = Files.readAllLines(RutaClientes, StandardCharsets.UTF_8);
-
-            for (int i = 1; i < lineas.size(); i++) {   // salta la primera linea del encabezamiento del archivo.
-                String linea = lineas.get(i);
+        try (BufferedReader bf = Files.newBufferedReader(RutaClientes, StandardCharsets.UTF_8)) {
+            bf.readLine(); // salta la primera linea del encabezamiento del archivo
+            String linea;
+            while ((linea = bf.readLine()) != null) {
                 if (!linea.isBlank()) {
                     Cliente cliente = fromCsv(linea);
-                    clientes.put(cliente.getIdCliente(), cliente); // put asigna el Idcliente a índice (Integer) del Map
+                    clientes.put(cliente.getIdCliente(), cliente);
                 }
             }
         } catch (IOException e) {
@@ -87,6 +116,7 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
         }
         return clientes;
     }
+
 
     public static Repostaje fromCsv(String linea, Map<Integer, Cliente> clientes) {
         String[] lineaPartida = linea.split(",");
@@ -112,6 +142,7 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
     }
 
     @Override
+    /* Cambio la forma de leer antigua introduciendo BufferedReader en su lugar
     public Map<Integer, Repostaje> cargarRepostajes(Map<Integer, Cliente> clientes) {
 
         Map<Integer, Repostaje> repostajes = new HashMap<>();
@@ -131,6 +162,24 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
         }
         return repostajes;
     }
+    */
 
-
+    @Override
+    public Map<Integer, Repostaje> cargarRepostajes(Map<Integer, Cliente> clientes) {
+        Map<Integer, Repostaje> repostajes = new HashMap<>();
+        try (BufferedReader bf = Files.newBufferedReader(RutaRepostajes, StandardCharsets.UTF_8)) {
+            bf.readLine(); // salta la primera linea del encabezamiento del archivo
+            String linea;
+            while ((linea = bf.readLine()) != null) {
+                if (!linea.isBlank()) {
+                    Repostaje repostaje = fromCsv(linea, clientes);
+                    if (repostaje != null)
+                        repostajes.put(repostaje.getIdRepostaje(), repostaje);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al cargar el archivo repostajes");
+        }
+        return repostajes;
+    }
 }
