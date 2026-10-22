@@ -6,16 +6,22 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        GestorArchivoCSV ArchivosGasolinera = new GestorArchivoCSV();
-        GestorArchivoJSON ArchivosGasolineraJS = new GestorArchivoJSON();
-/* Propuesta de Victor
-       //        Almacenamiento almacenamiento = new AlmacenamientoEnCSV();
-       //        Almacenamiento almacenamiento = new AlmacenamientoEnJSON();
- */
-        ArchivosGasolineraJS.prepararArchivo();
-        Map<Integer, Cliente> clientes = ArchivosGasolinera.cargarClientes();
-        Map<Integer, Repostaje> repostajes = ArchivosGasolinera.cargarRepostajes(clientes);
-        GestorVentas gestorVentas = new GestorVentas(clientes, repostajes, ArchivosGasolinera, ArchivosGasolineraJS);
+        // Elegir formato de archivo: descomentar la opción deseada
+//        ItfGestorArchivo gestorArchivo = new GestorArchivoCSV();   // Usar CSV
+         ItfGestorArchivo gestorArchivo = new GestorArchivoJSON(); // Usar JSON
+
+        gestorArchivo.prepararArchivo();
+        Map<Integer, Cliente> clientes = gestorArchivo.cargarClientes();
+
+        // Sincronizar el Map de clientes con el gestor de archivo
+       gestorArchivo.setClientes(clientes);
+
+        Map<Integer, Repostaje> repostajes = gestorArchivo.cargarRepostajes(clientes);
+
+        // Sincronizar el Map de repostajes con el gestor de archivo
+       gestorArchivo.setRepostajes(repostajes);
+
+        GestorVentas gestorVentas = new GestorVentas(clientes, repostajes, gestorArchivo);
 
         Scanner scanner = new Scanner(System.in);
         int opcion = -1;
@@ -60,9 +66,11 @@ public class Main {
                 }
 
                 case 2 -> {     // Listar clientes
+                    gestorArchivo.guardarClientesEnArchivo(); // grabado de clientesEnMemoria en archivo antes de listar
                     gestorVentas.listarClientes();
                 }
                 case 3 -> { // Buscar clientes
+                    gestorArchivo.guardarClientesEnArchivo(); // grabado de clientesEnMemoria en archivo antes de buscar cliente
                     String texto;
                     do {
                         System.out.println("Introduce el nombre o la matricula a buscar: ");
@@ -72,6 +80,7 @@ public class Main {
                     gestorVentas.buscarClientes(texto);
                 }
                 case 4 -> {// Procesar un pago de repostaje
+                    gestorArchivo.guardarClientesEnArchivo(); // grabado de clientesEnMemoria en archivo antes de procesar repostaje
                     System.out.println("Introduce el id del cliente: ");
                     int idCliente;
                     boolean idValido = false;
@@ -156,18 +165,27 @@ public class Main {
                     }
                 }
                 case 5 -> { // Consultar pagos
+                    gestorArchivo.guardarRepostajesEnArchivo(); // grabado de repostajes en memoria a archivo antes de consultar
                     gestorVentas.consultarPagos();
                 }
                 case 6 -> { // Migrar CSV a Json
                     System.out.println("Migrando Csv a Json...");
                     MigraCSVToJson migrador = new MigraCSVToJson();
                     migrador.migrarCSVToJson();
-                    migrador.migrarTodo();
+
+                    // Recargar los clientes desde el archivo JSON después de la migración
+                    clientes = gestorArchivo.cargarClientes();
+                    gestorArchivo.setClientes(clientes);
+
+                    // Actualizar el gestor de ventas con los nuevos datos
+                    gestorVentas = new GestorVentas(clientes, repostajes, gestorArchivo);
+
                     System.out.println("Migración completada");
                 }
                 case 0 -> {
                     System.out.println("¡Gracias por usar la aplicación!");
-                    ArchivosGasolineraJS.guardarClientesEnArchivo();
+                    gestorArchivo.guardarClientesEnArchivo(); // grabado de clientes en memoria
+                    gestorArchivo.guardarRepostajesEnArchivo(); // grabado de repostajes en memoria
                 }
                 default -> System.out.println("Opción no válida. Intente de nuevo.");
             }

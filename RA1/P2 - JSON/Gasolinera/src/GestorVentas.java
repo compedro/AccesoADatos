@@ -7,14 +7,12 @@ public class GestorVentas {
 
     Map<Integer, Cliente> clientes;
     Map<Integer, Repostaje> repostajes;
-    GestorArchivoCSV gestorArchivoCSV;
-    GestorArchivoJSON gestorArchivoJSON;
+    ItfGestorArchivo gestorArchivo;
 
-    public GestorVentas(Map<Integer, Cliente> clientes, Map<Integer, Repostaje> repostajes, GestorArchivoCSV gestorArchivoCSV, GestorArchivoJSON gestorArchivoJSON) {
+    public GestorVentas(Map<Integer, Cliente> clientes, Map<Integer, Repostaje> repostajes, ItfGestorArchivo gestorArchivo) {
         this.clientes = clientes;
         this.repostajes = repostajes;
-        this.gestorArchivoCSV = gestorArchivoCSV;
-        this.gestorArchivoJSON = gestorArchivoJSON;
+        this.gestorArchivo = gestorArchivo;
     }
 
     public void darAltaCliente(int idCliente, String nombre, String telefono, String matricula) {
@@ -22,9 +20,7 @@ public class GestorVentas {
         nuevoCliente.setIdCliente(clientes.size()+1); // reasigno el idCliente sumando uno al numero de clientes almacenados
         if (!clientes.containsKey(nuevoCliente.getIdCliente())) {
             clientes.put(nuevoCliente.getIdCliente(), nuevoCliente);
-            gestorArchivoCSV.guardarCliente(nuevoCliente);
-            gestorArchivoJSON.guardarCliente(nuevoCliente);
-//            gestorArchivoJSON.guardarClientesEnArchivo();   Comentada porque no se quiere guardar en el archivo JSON hasta el fina
+            gestorArchivo.guardarCliente(nuevoCliente);
         } else {
             System.out.println("El cliente ya existe");
         }
@@ -69,8 +65,7 @@ public class GestorVentas {
             repostaje.setCliente(c);               // asigno el cliente al repostaje
             repostaje.setIdRepostaje(repostajes.size() + 1);      //asigno el idRepostaje sumando uno al numero de repostajes ya registrados
             repostajes.put(repostaje.getIdRepostaje(), repostaje); // añado el repostaje al Map de respostajes
-            gestorArchivoCSV.guardarRepostaje(repostaje);       // guardo el repostaje al CSV de repostajes
-            gestorArchivoJSON.guardarRepostaje(repostaje);      //guardo el repostaje en el JSON repostajes
+            gestorArchivo.guardarRepostaje(repostaje);
             return repostaje;
         }
     }
