@@ -15,9 +15,9 @@ public final class PrimeraConexionMysql {
 * Las credenciales no quedan en el historial de comandos
 * Configuración global: Se configuran una vez en el sistema
 * Ejecución: java PrimeraConexionMysql */
-        String url = System.getenv("JARDIN_MYSQL_URL");
-        String usuario = System.getenv("JARDIN_MYSQL_USER");
-        String clave = System.getenv("JARDIN_MYSQL_PASSWORD");
+//        String url = System.getenv("JARDIN_MYSQL_URL");
+//        String usuario = System.getenv("JARDIN_MYSQL_USER");
+//        String clave = System.getenv("JARDIN_MYSQL_PASSWORD");
 /*Argumentos de línea de comandos (CLI)
 * Más flexible: Puedes cambiar credenciales en cada ejecución
 * Menos segura: Las credenciales quedan en el historial de comandos
@@ -32,9 +32,13 @@ public final class PrimeraConexionMysql {
 *url = "jdbc:mysql://localhost:3306/ra2_botanico";
 * usuario = "botanico";
 * clave = "1234"; */
-//        url= "jdbc:mysql://localhost:3306/ra2_botanico";
-//        usuario = "botanico";
-//        clave = "1234";
+//        String url= "jdbc:mysql://localhost:3306/ra2_botanico";
+//        String usuario = "botanico";
+//        String clave = "1234";
+
+        String url = "jdbc:mysql://gateway01.eu-central-1.prod.aws.tidbcloud.com:4000/sys?useSSL=true&requireSSL=true";
+        String usuario = "49VwnBjuqdwVwpc.root";
+        String clave = "y8Jj3rF5s4f0gafm";
 
 
         if (url == null || url.isBlank() || usuario == null || usuario.isBlank()) {
