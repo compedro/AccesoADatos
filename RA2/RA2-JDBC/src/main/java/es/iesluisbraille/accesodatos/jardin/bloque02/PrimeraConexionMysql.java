@@ -38,8 +38,8 @@ public final class PrimeraConexionMysql {
 
         String url = "jdbc:mysql://gateway01.eu-central-1.prod.aws.tidbcloud.com:4000/sys?useSSL=true&requireSSL=true";
         String usuario = "49VwnBjuqdwVwpc.root";
-        String clave = "y8Jj3rF5s4f0gafm";
-
+//        String clave = "y8Jj3rF5s4f0gafm";
+        String clave = "6mGG0kAHescXIXF4";
 
         if (url == null || url.isBlank() || usuario == null || usuario.isBlank()) {
             System.err.println("Configura JARDIN_MYSQL_URL y JARDIN_MYSQL_USER.");

@@ -13,7 +13,15 @@ public final class PrimeraConexionSqlite {
     }
 
     public static void main(String[] args) {
+
+        /*  Hardcodeado (NO recomendado)
         Path archivo = args.length == 0 ? Path.of("data", "jardin-botanico.db") : Path.of(args[0]);
+        */
+
+        // Utilizando variables de entorno es la forma mas segura
+        String dbPath = System.getenv().getOrDefault("SQLITE_DB_PATH", "data/jardin-botanico.db");
+        Path archivo = Path.of(dbPath);
+
         if (!Files.isRegularFile(archivo)) {
             System.err.println("No existe la base SQLite: " + archivo.toAbsolutePath());
             System.err.println("Prepárala con: python tools/preparar_sqlite.py");
