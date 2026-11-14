@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
+
     implementation 'org.slf4j:slf4j-simple:2.0.9'  // Agregada esta línea para eliminar el siguiente error:
     /*SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation

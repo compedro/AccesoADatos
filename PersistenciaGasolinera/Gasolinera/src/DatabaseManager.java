@@ -32,8 +32,8 @@ public class DatabaseManager {
             )
             """;
 
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Connection conn = getConnection();             //crea la conexión "conn" de la BBDD
+             Statement stmt = conn.createStatement()) {     //crea el objeto stmt para ejecutar instrucciones SQL en la BBDD
             stmt.execute(sqlClientes);
             stmt.execute(sqlRepostajes);
             System.out.println("Base de datos inicializada correctamente.");

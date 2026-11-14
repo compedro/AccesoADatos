@@ -17,21 +17,24 @@ public class Main {
 
             try (Connection conn = DatabaseManager.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                /*Prepara la sentencia SQL almacenada en sql (el INSERT)
+                Statement.RETURN_GENERATED_KEYS indica que queremos recuperar las claves generadas automáticamente (el ID)*/
 
-                pstmt.setString(1, clientePrueba.getNombre());
-                pstmt.setString(2, clientePrueba.getTelefono());
-                pstmt.setString(3, clientePrueba.getMatricula());
+                pstmt.setString(1, clientePrueba.getNombre());          //Asigna el primer parámetro (?) de la sentencia SQL con el nombre del cliente
+                pstmt.setString(2, clientePrueba.getTelefono());        // el segundo (?) al telefono
+                pstmt.setString(3, clientePrueba.getMatricula());       // el tercero (?) a la matricula
 
-                int filasAfectadas = pstmt.executeUpdate();
-                System.out.println("Cliente insertado. Filas afectadas: " + filasAfectadas);
 
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                int filasInsertadas = pstmt.executeUpdate();                         // ejecuta el insert en la BBDD asignando el numero de filas insertadas (1)
+                System.out.println("Cliente insertado. Filas afectadas: " + filasInsertadas);
+
+/*                try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
                         int idGenerado = rs.getInt(1);
                         clientePrueba.setIdCliente(idGenerado);
                         System.out.println("ID generado: " + idGenerado);
                     }
-                }
+                }*/
             }
 
             // Prueba de lectura: recuperar el cliente
@@ -39,8 +42,10 @@ public class Main {
             try (Connection conn = DatabaseManager.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sqlSelect)) {
 
-                pstmt.setInt(1, clientePrueba.getIdCliente());
-                ResultSet rs = pstmt.executeQuery();
+                pstmt.setInt(1, 2);
+                // El metodo setInt asigna el valor 2 al primer placeholder (?) de la sentencia SQL
+                // clientePrueba.getIdCliente() obtiene el valor del ID del objeto cliente
+                ResultSet rs = pstmt.executeQuery();    // ejecuta la query y devuelve TRUE/FALSE
 
                 if (rs.next()) {
                     System.out.println("Cliente recuperado de la BD:");
@@ -56,13 +61,10 @@ public class Main {
             e.printStackTrace();
         }
 
-        // Código existente del proyecto...
 
 
 
-
-
-
+        // Código anterior del proyecto...
 
 
 
