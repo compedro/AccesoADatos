@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.gasolinera'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
+    implementation 'com.mysql:mysql-connector-j:8.4.0'
+
+    implementation 'org.slf4j:slf4j-simple:2.0.9'  // Agregada esta línea para eliminar el siguiente error:
+    /*SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.*/
+
+    // --- Soporte para JSON con Jackson ---
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2' //Permite convertir objetos Java a JSON y viceversa (ObjectMapper).
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2' //Permite a Jackson serializar y deserializar fechas modernas de Java como LocalDate (que usamos en Repostaje).
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+// Agrega esto para indicar que el código está en src/
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+}
+
+application {
+    mainClass = 'Main'
+}
+
+tasks.register('runDemo', JavaExec) {
+    group = 'application'
+    description = 'Ejecuta la demostración de modalidades de producto'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'DemoModalidades'
+}
