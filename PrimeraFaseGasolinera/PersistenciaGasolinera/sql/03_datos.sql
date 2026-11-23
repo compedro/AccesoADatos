@@ -204,28 +204,6 @@ INSERT INTO ventas (id_venta, referencia_ticket, id_estacion, id_empleado, id_cl
 (5, 'TKT-2026-MAD-000103', 1, 4, 5,    '2026-11-18 18:00:00', 44.45, 'PAGADA');  -- Identificada
 
 INSERT INTO lineas_venta (id_linea_venta, id_venta, numero_orden, id_producto, cantidad, precio_unitario_aplicado, importe) VALUES
--- Venta 1: 2 líneas (Envasado + Granel) -> Total: 29.95 + 6.50 = 36.45
-(1,  1, 1, 1, 1.000, 29.95, 29.95), -- 1 garrafa aceite (envasado, entero)
-(2,  1, 2, 2, 1.000,  6.50,  6.50), -- 1 limpiaparabrisas
-
--- Venta 2: 2 líneas (Envasado + Granel) -> Total: 4.40 + 6.50 = 10.90
-(3,  2, 1, 3, 2.000,  2.20,  4.40), -- 2 latas bebida energética
-(4,  2, 2, 4, 0.448, 14.50,  6.50), -- 0.448 Kg almendras tostadas (granel, decimal)
-
--- Venta 3: 3 líneas -> Total: 6.50 + 20.25 + 9.00 = 35.75
-(5,  3, 1, 2, 1.000,  6.50,  6.50), -- 1 limpiaparabrisas
-(6,  3, 2, 1, 1.000, 29.95, 29.95), -- Corrección: 1 aceite a 29.95 no da 35.75, recalculamos:
--- Ajuste exacto de importes de Venta 3:
--- Línea 5: 1 Limpiaparabrisas a 6.50
--- Línea 6: 1.500 Kg Frutos Secos Natural a 12.00 = 18.00
--- Línea 7: 5 Latas Bebida a 2.20 = 11.25 -> 35.75 total exacto.
-(7,  3, 3, 6, 1.150,  9.80, 11.27); -- Línea 7
-
--- Ajustamos con valores coherentes y suma matemática precisa para las líneas:
--- Borramos las líneas recién creadas de prueba y ponemos las 12 líneas exactas:
-TRUNCATE TABLE lineas_venta;
-
-INSERT INTO lineas_venta (id_linea_venta, id_venta, numero_orden, id_producto, cantidad, precio_unitario_aplicado, importe) VALUES
 -- Ticket 1 (id_venta 1, total 36.45):
 (1,  1, 1, 1, 1.000, 29.95, 29.95), -- Aceite 5W30
 (2,  1, 2, 2, 1.000,  6.50,  6.50), -- Limpiaparabrisas

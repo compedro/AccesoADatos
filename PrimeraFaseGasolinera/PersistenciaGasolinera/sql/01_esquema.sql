@@ -87,8 +87,7 @@ CREATE TABLE empleados (
         ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT fk_empleados_supervisor FOREIGN KEY (id_supervisor)
         REFERENCES empleados(id_empleado)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT chk_empleados_no_autosupervision CHECK (id_supervisor IS NULL OR id_supervisor <> id_empleado)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 -- Entidad: funciones
@@ -160,7 +159,7 @@ CREATE TABLE tarjetas_fidelizacion (
     CONSTRAINT uq_tarjetas_id_cliente UNIQUE (id_cliente),
     CONSTRAINT fk_tarjetas_clientes FOREIGN KEY (id_cliente)
         REFERENCES clientes(id_cliente)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
     CONSTRAINT chk_tarjetas_coherencia_cliente CHECK (
         (id_cliente IS NULL AND fecha_asignacion IS NULL) OR
         (id_cliente IS NOT NULL AND fecha_asignacion IS NOT NULL AND fecha_asignacion >= fecha_emision)

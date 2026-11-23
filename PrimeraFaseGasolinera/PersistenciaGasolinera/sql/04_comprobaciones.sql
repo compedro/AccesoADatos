@@ -289,10 +289,9 @@ INSERT INTO productos (referencia_producto, descripcion, precio_venta, estado_co
 VALUES ('PROD-ERROR-GRA', 'Cacahuetes a granel sin precisión', 5.00, 'ACTIVO', 'GRANEL', NULL, NULL);
 -- Mensaje MySQL esperado: Error Code 3819: Check constraint 'chk_productos_modalidad_datos' is violated.
 
--- ERROR ESPERADO 5: Intento de auto-supervisión de un empleado sobre sí mismo
--- Causa: Violación del CHECK chk_empleados_no_autosupervision
-UPDATE empleados SET id_supervisor = id_empleado WHERE id_empleado = 1;
--- Mensaje MySQL esperado: Error Code 3819: Check constraint 'chk_empleados_no_autosupervision' is violated.
+-- CASO LÍMITE: Intento de auto-supervisión y ciclos de supervisión (A -> A, A -> B -> A)
+-- Nota de diseño: MySQL prohíbe el uso de columnas AUTO_INCREMENT en restricciones CHECK (Error 1901: Function or expression 'AUTO_INCREMENT' cannot be used in the CHECK clause).
+-- Por ello, la prevención de auto-supervisión y ciclos indirectos se gestiona en el modelo Java (método Empleado.asignarSupervisor) y en la capa de servicio JDBC de la Fase 2.
 
 -- ERROR ESPERADO 6: Intento de insertar fecha_fin anterior a fecha_inicio en campaña
 -- Causa: Violación del CHECK chk_campanas_fechas

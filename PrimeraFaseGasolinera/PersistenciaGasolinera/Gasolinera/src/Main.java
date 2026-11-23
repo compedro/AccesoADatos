@@ -62,16 +62,30 @@ public class Main {
         }
 
 
-        // --- SELECCIÓN DE MECANISMO DE PERSISTENCIA ---
-        // Se puede alternar entre GestorArchivoCSV() y GestorArchivoJSON()
-        ItfGestorArchivo gestorArchivos = new GestorArchivoJSON();
+        Scanner scanner = new Scanner(System.in);
+
+        // --- SELECCIÓN INTERACTIVA DE PERSISTENCIA ---
+        // Permite comprobar y auditar la convivencia de ambas persistencias
+        System.out.println("");
+        System.out.println("=== SELECCIÓN DE SISTEMA DE ALMACENAMIENTO ===");
+        System.out.println("1. Ficheros CSV (clientes.csv / repostajes.csv)");
+        System.out.println("2. Ficheros JSON (clientes.json / repostajes.json)");
+        System.out.print("Seleccione persistencia [1-CSV, 2-JSON, por defecto 2]: ");
+        String seleccion = scanner.nextLine().trim();
+
+        ItfGestorArchivo gestorArchivos;
+        if ("1".equals(seleccion)) {
+            gestorArchivos = new GestorArchivoCSV();
+            System.out.println("-> Modo de persistencia activo: CSV (clientes.csv / repostajes.csv)\n");
+        } else {
+            gestorArchivos = new GestorArchivoJSON();
+            System.out.println("-> Modo de persistencia activo: JSON (clientes.json / repostajes.json)\n");
+        }
+
         gestorArchivos.prepararArchivo();
         Map<Integer, Cliente> clientes = gestorArchivos.cargarClientes();
         Map<Integer, Repostaje> repostajes = gestorArchivos.cargarRepostajes(clientes);
         GestorVentas gestorVentas = new GestorVentas(clientes, repostajes, gestorArchivos);
-
-
-        Scanner scanner = new Scanner(System.in);
         int opcion = -1;
         do {
             System.out.println("\n" +

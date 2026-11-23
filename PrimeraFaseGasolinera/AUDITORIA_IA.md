@@ -30,12 +30,19 @@ Durante el desarrollo de la Fase 1, se utilizó asistencia de Inteligencia Artif
 * **Qué se pidió:**  
   Incorporar persistencia en JSON usando la librería Jackson manteniendo plena compatibilidad hacia atrás con el código existente que usaba CSV.
 * **Qué propuso la IA inicialmente:**  
-  Propuso implementar `GestorArchivoJSON` e importar directamente la clase concreta dentro de `GestorVentas`, sustituyendo la referencia directa previa a `GestorArchivoCSV`.
+  Propuso implementar `GestorArchivoJSON` y sustituir directamente en `GestorVentas` y `Main` la clase `GestorArchivoCSV` por `GestorArchivoJSON`, dejando el nuevo gestor prefijado en el código fuente.
 * **Análisis crítico (Aciertos y Errores):**  
-  * *Lo que hizo mal:* La IA sustituyó un acoplamiento concreto por otro, en lugar de utilizar la interfaz ya existente `ItfGestorArchivo`. Además, generó un fallo en tiempo de ejecución al serializar/deserializar con Jackson porque las clases de dominio (`Cliente` y `Repostaje`) carecían de constructores por defecto sin argumentos, produciendo una excepción `InvalidDefinitionException: Cannot construct instance of Cliente (no Creators, like default constructor, exist)`.
-  * *Lo que se corrigió / modificó:* Se añadieron los constructores sin argumentos en `Cliente.java` y `Repostaje.java`, se registró el módulo JavaTime en ObjectMapper (`JavaTimeModule`) para soportar `LocalDate`, y se modificó `GestorVentas` para que dependa exclusivamente de la abstracción `ItfGestorArchivo`, permitiendo inyectar indistintamente la implementación CSV o JSON.
+  * *Lo que hizo mal:*  
+    1. **Falso desacoplamiento:** Sustituyó un acoplamiento concreto (`GestorArchivoCSV`) por otro (`GestorArchivoJSON`), en lugar de utilizar la abstracción `ItfGestorArchivo` ya disponible.
+    2. **Fallo de deserialización Jackson:** No contempló que las entidades de dominio (`Cliente` y `Repostaje`) carecían de constructores por defecto sin argumentos, provocando excepciones en tiempo de ejecución (`InvalidDefinitionException: Cannot construct instance of Cliente`).
+    3. **Imposibilidad de alternancia en tiempo de ejecución:** Al dejar `gestorArchivos = new GestorArchivoJSON();` estático en `Main.java`, la aplicación quedó atrapada en el formato JSON. Al ser soportes físicos independientes (`.csv` vs. `.json`), las operaciones en un formato no se reflejan automáticamente en el otro. Si el usuario ejecutaba el programa, no podía auditar ni comparar las lecturas del CSV heredado sin modificar manualmente el código fuente y recompilar.
+  * *Lo que se corrigió / modificó:*  
+    1. Se incorporaron constructores sin argumentos en `Cliente.java` y `Repostaje.java` y se registró `JavaTimeModule` en `ObjectMapper` para serializar fechas `LocalDate` legibles.
+    2. Se refactorizó `GestorVentas` para depender exclusivamente de `ItfGestorArchivo` (Principio de Inversión de Dependencias de SOLID).
+    3. Se implementó un **selector interactivo al inicio de `Main.java`** que permite al usuario escoger en tiempo de ejecución entre `1. Ficheros CSV` o `2. Ficheros JSON`.
+    4. Se sincronizó el catálogo inicial de prueba en ambos formatos (`clientes.json` / `repostajes.json` reflejando los registros de los CSV) para que el comportamiento observable en la aplicación sea idéntico al alternar de motor.
 * **Cómo se verificó:**  
-  Se ejecutó el programa invocando tanto el gestor CSV como el JSON, comprobando que se creaban `clientes.json` y `repostajes.json` con formato *pretty print* legible y que las lecturas y escrituras eran idénticas a las del formato CSV.
+  Se ejecutó `Main.java` en dos sesiones sucesivas: primero seleccionando la opción 1 (CSV) y comprobando la carga de clientes y repostajes desde `clientes.csv` y `repostajes.csv`; y después seleccionando la opción 2 (JSON) comprobando la misma carga desde `clientes.json` y `repostajes.json`. En ambas modalidades se realizaron altas y pagos de prueba, verificando que cada gestor persiste correctamente en su propio formato (CSV delimitado por comas vs. JSON estructurado *pretty-print*) manteniendo intacta la lógica de la aplicación.
 
 ---
 

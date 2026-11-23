@@ -1,0 +1,37 @@
+[ {
+  "idRepostaje" : 1,
+  "cliente" : {
+    "idCliente" : 1,
+    "nombre" : "test 1",
+    "telefono" : "22322",
+    "matricula" : "424222"
+  },
+  "fecha" : "2026-09-30",
+  "importe" : 45.0,
+  "litros" : 34.0,
+  "combustible" : "GASOLINA_98"
+}, {
+  "idRepostaje" : 2,
+  "cliente" : {
+    "idCliente" : 2,
+    "nombre" : "test 2",
+    "telefono" : "99999+",
+    "matricula" : "987654"
+  },
+  "fecha" : "2026-09-30",
+  "importe" : 98.0,
+  "litros" : 65.0,
+  "combustible" : "GASOLINA_98"
+}, {
+  "idRepostaje" : 3,
+  "cliente" : {
+    "idCliente" : 3,
+    "nombre" : "Nombre23",
+    "telefono" : "telefono23",
+    "matricula" : "MATRICULA23"
+  },
+  "fecha" : "2026-11-23",
+  "importe" : 23.0,
+  "litros" : 23.0,
+  "combustible" : "GASOLINA_98"
+} ]

@@ -1,0 +1,16 @@
+[ {
+  "idCliente" : 1,
+  "nombre" : "test 1",
+  "telefono" : "22322",
+  "matricula" : "424222"
+}, {
+  "idCliente" : 2,
+  "nombre" : "test 2",
+  "telefono" : "99999+",
+  "matricula" : "987654"
+}, {
+  "idCliente" : 3,
+  "nombre" : "Nombre23",
+  "telefono" : "telefono23",
+  "matricula" : "MATRICULA23"
+} ]
