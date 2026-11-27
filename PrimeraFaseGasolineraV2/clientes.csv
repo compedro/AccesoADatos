@@ -1,2 +1,2 @@
-id,nombre,telefono,matricula
-1,Paco,666666666,ABC-123
+id,codigoCliente,nombre,telefono,matricula
+1,CLI-001,Paco,666666666,ABC-123

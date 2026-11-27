@@ -60,6 +60,11 @@ public class Main {
             switch (opcion) {
                 case 1 -> { // Dar de alta un cliente
                     scanner.nextLine();
+                    String codigoCliente;
+                    do {
+                        System.out.println("Introduce el código de cliente");
+                        codigoCliente = scanner.nextLine().trim();
+                    } while (codigoCliente.isEmpty());
                     String nombreCliente;
                     do {
                         System.out.println("Introduce el Nombre: ");
@@ -75,7 +80,7 @@ public class Main {
                         System.out.println("Introduce la matricula");
                         matricula = scanner.nextLine().trim();
                     } while (matricula.isEmpty());
-                    gestorVentas.darAltaCliente(nombreCliente, telefono, matricula);
+                    gestorVentas.darAltaCliente(codigoCliente, nombreCliente, telefono, matricula);
                 }
 
                 case 2 -> {     // Listar clientes

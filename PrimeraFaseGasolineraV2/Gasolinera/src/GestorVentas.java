@@ -17,8 +17,17 @@ public class GestorVentas {
     }
 
 
-    public void darAltaCliente(String nombre, String telefono, String matricula) {
-        Cliente nuevoCliente = new Cliente(null, nombre, telefono, matricula);
+    public void darAltaCliente(String codigoCliente, String nombre, String telefono, String matricula) {
+        if (codigoCliente == null || codigoCliente.trim().isEmpty()) {
+            System.out.println("El código de cliente no puede estar vacío");
+            return;
+        }
+        codigoCliente = codigoCliente.trim();
+        if (existeCodigoCliente(codigoCliente)) {
+            System.out.println("Ya existe un cliente con ese código");
+            return;
+        }
+        Cliente nuevoCliente = new Cliente(null, codigoCliente, nombre, telefono, matricula);
         // size()+1 reutiliza un ID si hay huecos; máximo+1 respeta los ya asignados
         nuevoCliente.setIdCliente(calcularSiguienteId(clientes.keySet()));
         if (clientes.containsKey(nuevoCliente.getIdCliente())) {
@@ -31,6 +40,15 @@ public class GestorVentas {
         } else {
             System.out.println("No se ha podido guardar el cliente");
         }
+    }
+
+    private boolean existeCodigoCliente(String codigoCliente) {
+        for (Cliente cliente : clientes.values()) {
+            if (codigoCliente.equals(cliente.getCodigoCliente())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private int calcularSiguienteId(Set<Integer> claves) {

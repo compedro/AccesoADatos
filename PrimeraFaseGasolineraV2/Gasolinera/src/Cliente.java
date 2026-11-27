@@ -1,11 +1,13 @@
 public class Cliente {
     private Integer idCliente; // null = aún no persistido; evita el centinela 0
+    private String codigoCliente; // referencia de negocio, única
     private String nombre;
     private String telefono;
     private String matricula;
 
-    public Cliente(Integer idCliente, String nombre, String telefono, String matricula) {
+    public Cliente(Integer idCliente, String codigoCliente, String nombre, String telefono, String matricula) {
         this.idCliente = idCliente;
+        this.codigoCliente = codigoCliente.trim();
         this.nombre = nombre.trim();
         this.telefono = telefono.trim();
         this.matricula = matricula.trim().toUpperCase();
@@ -17,6 +19,14 @@ public class Cliente {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public String getCodigoCliente() {
+        return codigoCliente;
+    }
+
+    public void setCodigoCliente(String codigoCliente) {
+        this.codigoCliente = codigoCliente.trim();
     }
 
     public String getNombre() {
@@ -46,6 +56,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return String.format("%-5s %-20s %-15s %-10s%n", idCliente, nombre, telefono, matricula);
+        return String.format("%-5s %-12s %-20s %-15s %-10s%n",
+                idCliente, codigoCliente, nombre, telefono, matricula);
     }
 }

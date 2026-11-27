@@ -47,7 +47,8 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
     }
 
     public String toCsv(Cliente cliente) {
-        return cliente.getIdCliente() + "," + cliente.getNombre() + "," + cliente.getTelefono() + "," + cliente.getMatricula();
+        return cliente.getIdCliente() + "," + cliente.getCodigoCliente() + "," + cliente.getNombre()
+                + "," + cliente.getTelefono() + "," + cliente.getMatricula();
     }
     @Override
     public boolean guardarCliente(Cliente c) {
@@ -67,7 +68,8 @@ public class GestorArchivoCSV implements ItfGestorArchivo {
 
     public static Cliente fromCsv(String linea) {
         String lineaPartida[] = linea.split(",");
-        return new Cliente(Integer.parseInt(lineaPartida[0]), lineaPartida[1], lineaPartida[2], lineaPartida[3]);
+        return new Cliente(Integer.parseInt(lineaPartida[0]), lineaPartida[1],
+                lineaPartida[2], lineaPartida[3], lineaPartida[4]);
     }
 
     @Override

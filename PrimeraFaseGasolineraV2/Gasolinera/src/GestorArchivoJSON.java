@@ -105,6 +105,7 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
 
     private String aJson(Cliente cliente) {
         return "{\"id\":" + cliente.getIdCliente()
+                + ",\"codigoCliente\":\"" + escapar(cliente.getCodigoCliente()) + "\""
                 + ",\"nombre\":\"" + escapar(cliente.getNombre()) + "\""
                 + ",\"telefono\":\"" + escapar(cliente.getTelefono()) + "\""
                 + ",\"matricula\":\"" + escapar(cliente.getMatricula()) + "\"}";
@@ -174,6 +175,7 @@ public class GestorArchivoJSON implements ItfGestorArchivo {
     private Cliente desdeJsonCliente(String objeto) {
         return new Cliente(
                 Integer.valueOf(leerNumero(objeto, "id")),
+                leerTexto(objeto, "codigoCliente"),
                 leerTexto(objeto, "nombre"),
                 leerTexto(objeto, "telefono"),
                 leerTexto(objeto, "matricula"));

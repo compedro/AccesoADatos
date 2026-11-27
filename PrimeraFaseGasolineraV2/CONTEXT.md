@@ -64,7 +64,7 @@
 
 ---
 
-## 7. Estado de ejecución (registro cronológico)
+## 7. Estado de ejecución (registro cronológico; última modificación 27/11/2026)
 
 - [25/11/2026] Completado: `GestorVentas` depende de `ItfGestorArchivo`; CSV saneados; tipos migrados a `Integer` nullable y `BigDecimal` con escala 2 y `HALF_UP`; IDs por máximo + 1 en `GestorVentas.darAltaCliente` y `GestorVentas.procesarPago`.
 - [25/11/2026] Decisión del usuario: no se crean copias `.bak`; los registros eran datos de prueba sin valor. No reabrir este punto.
@@ -83,3 +83,6 @@
 - [26/11/2026] Próximos bloques: tarjetas de fidelización, catálogo y campañas, ventas con líneas y pagos, devoluciones e incidencias, jerarquía de producto con su demostración, scripts SQL (`01` a `04`) y entregables (`README.md`, `AUDITORIA_IA.odt` y registro de intervenciones de IA).
 - [26/11/2026] Pendientes menores: espacios en la cabecera que escribe `GestorArchivoCSV.prepararArchivo`; comprobación `containsKey` redundante en `GestorVentas.darAltaCliente`.
 - [27/11/2026] Documentación: se incorpora la regla de registro cronológico en `AGENTS.md` y se fechan las entradas de este apartado.
+- [27/11/2026] Decisión del usuario: la relación 1:1 cliente↔tarjeta se guarda solo en `TarjetaFidelizacion` (opción A). `Cliente` no guarda la tarjeta; para consultarla se usará el repositorio en Fase 2. En MySQL el FK sigue en la tabla de tarjetas.
+- [27/11/2026] Completado: `TarjetaFidelizacion.java` con `idTarjeta`, `numeroTarjeta`, `fechaEmision`, `titular` y `fechaAsignacion`. El constructor crea tarjetas sin titular; `TarjetaFidelizacion.asignarTitular` asigna ambos campos y rechaza fechas nulas o una segunda asignación. No hay `setTitular`. Compilación y prueba temporal verificadas.
+- [27/11/2026] Completado: `codigoCliente` incorporado a `Cliente` como referencia de negocio separada de `idCliente` (opción A: lo introduce el usuario). `GestorVentas.darAltaCliente` valida código vacío y duplicado antes de instanciar; `Main.main` lo solicita; `GestorArchivoCSV` y `GestorArchivoJSON` lo serializan; `clientes.csv` y `clientes.json` usan `CLI-001`. Compilación y prueba de ida y vuelta verificadas.
