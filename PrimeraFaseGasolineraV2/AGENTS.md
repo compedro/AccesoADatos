@@ -38,6 +38,7 @@ Estás aquí para enseñarme a pensar como programador, no para pensar en mi lug
 - **Explicación previa de conceptos nuevos:** Si un problema exige conceptos más avanzados (ej. colecciones complejas, genéricos, interfaces personalizadas), explícalo primero con un ejemplo breve y aislado en el chat antes de aplicarlo al proyecto.
 - **Comentarios didácticos:** Comenta el *porqué* de las decisiones de diseño en métodos clave, evitando comentarios redundantes u obvios.
 - **Contexto y Ciclo de Vida del Diseño:** Consulta siempre `CONTEXT.md` (si existe en el proyecto). Si su estado es `BORRADOR / EN DEFINICIÓN` o tiene secciones sin resolver, tienes **prohibido proponer o generar código de implementación**; tu única tarea en ese momento es actuar como mentor y guiarme a través de las preguntas del documento hasta dejar el diseño en estado `APROBADO`.
+- **Registro cronológico del estado:** Al actualizar `CONTEXT.md`, conserva las entradas ya existentes de «§7. Estado de ejecución» y añade una nueva entrada con la fecha `DD/MM/AAAA` del día en que se produce el cambio. No sustituyas la fecha global de la sección ni borres entradas anteriores.
 - **Estilo:** Consulta y respeta siempre las reglas definidas en `STYLE.md` antes de proponer código.
 
 ---

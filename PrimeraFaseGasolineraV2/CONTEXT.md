@@ -64,21 +64,22 @@
 
 ---
 
-## 7. Estado de ejecución (actualizado 26/11/2026)
+## 7. Estado de ejecución (registro cronológico)
 
-- Completado: `GestorVentas` depende de `ItfGestorArchivo`; CSV saneados; tipos migrados a `Integer` nullable y `BigDecimal` con escala 2 y `HALF_UP`; IDs por máximo + 1 en `GestorVentas.darAltaCliente` y `GestorVentas.procesarPago`.
-- Decisión del usuario: no se crean copias `.bak`; los registros eran datos de prueba sin valor. No reabrir este punto.
-- Completado: `GestorArchivoJSON` escribe un array JSON con un objeto por línea y conserva los mapas en el gestor (opción A). Compilación y prueba de ida y vuelta verificadas.
-- Corregido: `GestorArchivoJSON.cargarRepostajes` vaciaba el mapa compartido con `Main` al usar `this.clientes`; ahora lee por el parámetro `clientesCargados`.
-- Corregido: `GestorArchivoJSON.cargarClientes` y `GestorArchivoJSON.cargarRepostajes` descartan la línea `[]`, que es el estado inicial creado por `prepararArchivo`. Sin esta condición el primer arranque lanzaba `StringIndexOutOfBoundsException`.
-- Completado: `Main.main` pregunta al arrancar entre CSV y JSON (opción B), sin recompilar.
-- Completado: clase `Pagos` con `Integer idPago`, `BigDecimal importe`, `LocalDateTime fechaHora` y enum `MedioPago` (`EFECTIVO`, `TARJETA`). Sin `idVenta` hasta que exista `Venta`. Pendiente de confirmar qué campos y comportamientos tenía la `Pagos` anterior.
-- Completado: clases `Estacion`, `FichaFacturacion`, `Surtidor` y `Empleado`. Todas compilan.
-- Decisión del usuario: la relación 1:1 estación↔ficha se guarda en `Estacion` (opción A: estación → ficha). La ficha no guarda la estación; la inversa se resolverá en un servicio.
-- Decisión del usuario: los contactos del empleado se guardan en dos campos, `telefono` y `email` (opción A).
-- Resuelto: diseño de `AsignacionFuncion`. El usuario elige subclase por función y **clase base abstracta sin métodos abstractos**: `AsignacionFuncion.java` (con `enum TipoFuncion`) y las subclases `AsignacionCajero`, `AsignacionExpendedor`, `AsignacionResponsableTienda` y `AsignacionJefeEstacion`. Cada subclase fija su tipo en `super(...)` y lleva su condición con comportamiento propio (`AsignacionCajero.puedeAutorizar`, `AsignacionExpendedor.acreditacionVigente`, `AsignacionResponsableTienda.puedeComprar`, `AsignacionJefeEstacion.tieneNivel`). La base aporta `AsignacionFuncion.estaVigente` y `AsignacionFuncion.retirar`, que devuelve `false` si el periodo ya está cerrado.
-- Completado: `Empleado` guarda `List<AsignacionFuncion>` con `Empleado.asignarFuncion`, `Empleado.retirarFuncion`, `Empleado.tieneFuncionVigente` y `Empleado.getAsignaciones`. El control de periodos solapados sigue pendiente para Fase 2 (§4).
-- Verificado: compilación de todos los `.java` sin errores y prueba temporal fuera del proyecto con Laura: tres asignaciones, dos periodos de cajera con límites 150,00 y 300,00, cierre del periodo vigente sin borrar el antiguo y rechazo de un segundo cierre.
-- Punto actual: tarjetas de fidelización. Falta decidir si la referencia 1:1 se guarda solo en `TarjetaFidelizacion` (opción A) o en ambos lados, añadiendo el campo a `Cliente` (opción B). En MySQL el FK irá en la tabla de tarjetas en cualquier caso.
-- Próximos bloques: tarjetas de fidelización, catálogo y campañas, ventas con líneas y pagos, devoluciones e incidencias, jerarquía de producto con su demostración, scripts SQL (`01` a `04`) y entregables (`README.md`, `AUDITORIA_IA.odt` y registro de intervenciones de IA).
-- Pendientes menores: espacios en la cabecera que escribe `GestorArchivoCSV.prepararArchivo`; comprobación `containsKey` redundante en `GestorVentas.darAltaCliente`.
+- [25/11/2026] Completado: `GestorVentas` depende de `ItfGestorArchivo`; CSV saneados; tipos migrados a `Integer` nullable y `BigDecimal` con escala 2 y `HALF_UP`; IDs por máximo + 1 en `GestorVentas.darAltaCliente` y `GestorVentas.procesarPago`.
+- [25/11/2026] Decisión del usuario: no se crean copias `.bak`; los registros eran datos de prueba sin valor. No reabrir este punto.
+- [25/11/2026] Completado: `GestorArchivoJSON` escribe un array JSON con un objeto por línea y conserva los mapas en el gestor (opción A). Compilación y prueba de ida y vuelta verificadas.
+- [25/11/2026] Corregido: `GestorArchivoJSON.cargarRepostajes` vaciaba el mapa compartido con `Main` al usar `this.clientes`; ahora lee por el parámetro `clientesCargados`.
+- [25/11/2026] Corregido: `GestorArchivoJSON.cargarClientes` y `GestorArchivoJSON.cargarRepostajes` descartan la línea `[]`, que es el estado inicial creado por `prepararArchivo`. Sin esta condición el primer arranque lanzaba `StringIndexOutOfBoundsException`.
+- [25/11/2026] Completado: `Main.main` pregunta al arrancar entre CSV y JSON (opción B), sin recompilar.
+- [25/11/2026] Completado: clase `Pagos` con `Integer idPago`, `BigDecimal importe`, `LocalDateTime fechaHora` y enum `MedioPago` (`EFECTIVO`, `TARJETA`). Sin `idVenta` hasta que exista `Venta`. Pendiente de confirmar qué campos y comportamientos tenía la `Pagos` anterior.
+- [25/11/2026] Completado: clases `Estacion`, `FichaFacturacion`, `Surtidor` y `Empleado`. Todas compilan.
+- [26/11/2026] Decisión del usuario: la relación 1:1 estación↔ficha se guarda en `Estacion` (opción A: estación → ficha). La ficha no guarda la estación; la inversa se resolverá en un servicio.
+- [26/11/2026] Decisión del usuario: los contactos del empleado se guardan en dos campos, `telefono` y `email` (opción A).
+- [26/11/2026] Resuelto: diseño de `AsignacionFuncion`. El usuario elige subclase por función y **clase base abstracta sin métodos abstractos**: `AsignacionFuncion.java` (con `enum TipoFuncion`) y las subclases `AsignacionCajero`, `AsignacionExpendedor`, `AsignacionResponsableTienda` y `AsignacionJefeEstacion`. Cada subclase fija su tipo en `super(...)` y lleva su condición con comportamiento propio (`AsignacionCajero.puedeAutorizar`, `AsignacionExpendedor.acreditacionVigente`, `AsignacionResponsableTienda.puedeComprar`, `AsignacionJefeEstacion.tieneNivel`). La base aporta `AsignacionFuncion.estaVigente` y `AsignacionFuncion.retirar`, que devuelve `false` si el periodo ya está cerrado.
+- [26/11/2026] Completado: `Empleado` guarda `List<AsignacionFuncion>` con `Empleado.asignarFuncion`, `Empleado.retirarFuncion`, `Empleado.tieneFuncionVigente` y `Empleado.getAsignaciones`. El control de periodos solapados sigue pendiente para Fase 2 (§4).
+- [26/11/2026] Verificado: compilación de todos los `.java` sin errores y prueba temporal fuera del proyecto con Laura: tres asignaciones, dos periodos de cajera con límites 150,00 y 300,00, cierre del periodo vigente sin borrar el antiguo y rechazo de un segundo cierre.
+- [26/11/2026] Punto actual: tarjetas de fidelización. Falta decidir si la referencia 1:1 se guarda solo en `TarjetaFidelizacion` (opción A) o en ambos lados, añadiendo el campo a `Cliente` (opción B). En MySQL el FK irá en la tabla de tarjetas en cualquier caso.
+- [26/11/2026] Próximos bloques: tarjetas de fidelización, catálogo y campañas, ventas con líneas y pagos, devoluciones e incidencias, jerarquía de producto con su demostración, scripts SQL (`01` a `04`) y entregables (`README.md`, `AUDITORIA_IA.odt` y registro de intervenciones de IA).
+- [26/11/2026] Pendientes menores: espacios en la cabecera que escribe `GestorArchivoCSV.prepararArchivo`; comprobación `containsKey` redundante en `GestorVentas.darAltaCliente`.
+- [27/11/2026] Documentación: se incorpora la regla de registro cronológico en `AGENTS.md` y se fechan las entradas de este apartado.
